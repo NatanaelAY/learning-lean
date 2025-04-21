@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOSIOLOGI 101: Belajar Asyik untuk Pemula (Revisi v8 - Judul & Refleksi Diperbarui)</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Font default Poppins */
+        body {
+            font-family: 'Poppins', sans-serif;
+            padding-top: 68px;
+            background-color: #f0f9ff; /* sky-50 */
+            color: #3f3f46; /* zinc-700 */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23bae6fd' fill-opacity='0.1'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 1.4l2.83 2.83 1.41-1.41L1.41 0H0v1.41zM38.59 40l-2.83-2.83 1.41-1.41L40 38.59V40h-1.41zM40 1.41l-2.83 2.83-1.41-1.41L38.59 0H40v1.41zM20 18.6l2.83-2.83 1.41 1.41L21.41 20l2.83 2.83-1.41 1.41L20 21.41l-2.83 2.83-1.41-1.41L18.59 20l-2.83-2.83 1.41-1.41L20 18.59z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        /* Styling dasar untuk ikon SVG inline */
+        .hero-icon {
+            width: 1.25rem; height: 1.25rem; display: inline-block;
+            vertical-align: middle; margin-right: 0.5rem;
+        }
+        /* Styling untuk area interaktif/refleksi */
+        .interactive-box {
+            margin-top: 1.25rem; padding: 1rem 1.25rem;
+            border-left-width: 4px; border-radius: 0.5rem;
+            background-color: #f0fdf4; /* green-50 */
+            border-color: #4ade80; /* green-400 */
+            box-shadow: 0 2px 5px rgba(74, 222, 128, 0.1);
+        }
+        .interactive-box h5 {
+            font-weight: 600; color: #16a34a; /* green-600 */
+            margin-bottom: 0.5rem; display: flex; align-items: center;
+        }
+        .interactive-box p, .interactive-box ul {
+             color: #15803d; /* green-700 */
+             font-size: 0.95em;
+        }
+        /* Contoh Nyata Box */
+        .real-example-box {
+            margin-top: 1.25rem; padding: 1rem 1.25rem;
+            border-left-width: 4px; border-radius: 0.5rem;
+            background-color: #fef3c7; /* amber-100 */
+            border-color: #fcd34d; /* amber-300 */
+            box-shadow: 0 2px 5px rgba(252, 211, 77, 0.15);
+        }
+        .real-example-box h5 {
+            font-weight: 600; color: #b45309; /* amber-700 */
+            margin-bottom: 0.5rem; display: flex; align-items: center;
+        }
+        .real-example-box p { color: #92400e; font-size: 0.95em; }
+        /* Placeholder textarea untuk refleksi */
+        .reflection-textarea {
+            width: 100%; border: 1px dashed #a7f3d0;
+            border-radius: 0.375rem; padding: 0.5rem 0.75rem;
+            margin-top: 0.75rem; font-size: 0.9em; color: #14532d;
+            background-color: #dcfce7;
+            min-height: 60px; resize: vertical;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .reflection-textarea::placeholder { color: #166534; opacity: 0.7; }
+        /* Tombol sederhana */
+        .simple-button {
+            display: inline-block; padding: 0.6rem 1.2rem;
+            background-image: linear-gradient(to right, #38bdf8, #22d3ee);
+            color: white; border-radius: 9999px;
+            font-size: 0.9rem; font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer; border: none;
+            box-shadow: 0 4px 8px rgba(56, 189, 248, 0.25);
+        }
+        .simple-button:hover {
+            background-image: linear-gradient(to right, #0ea5e9, #06b6d4);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 12px rgba(14, 165, 233, 0.35);
+        }
+        .simple-button:active {
+            transform: translateY(0px) scale(1.02);
+             box-shadow: 0 3px 6px rgba(14, 165, 233, 0.3);
+        }
+        /* Styling untuk opsi kuis */
+        .quiz-option { margin-bottom: 0.5rem; }
+        .quiz-option label { cursor: pointer; display: block; padding: 0.25rem 0; }
+        /* Styling untuk feedback kuis */
+        .quiz-feedback { margin-top: 0.75rem; font-size: 0.9em; padding: 0.5rem 0.75rem; border-radius: 0.375rem;}
+        .correct { color: #065f46; background-color: #d1fae5; border: 1px solid #6ee7b7; }
+        .incorrect { color: #991b1b; background-color: #fee2e2; border: 1px solid #fca5a5; }
+        .quiz-feedback strong { font-weight: 600; }
+        .quiz-feedback .hint { display: block; margin-top: 0.35rem; font-style: italic; font-size: 0.9em; opacity: 0.9; }
+        /* Styling italic */
+        i, em { font-style: italic; }
+        /* Styling heading di dalam konten */
+        main h4 {
+            margin-top: 1.5rem; margin-bottom: 0.75rem;
+            font-weight: 600; color: #0ea5e9;
+        }
+        main h4:first-of-type { margin-top: 0.5rem; }
+        /* Styling untuk paragraf pembuka (lead) */
+        .lead {
+            font-size: 1.05em; color: #52525b;
+            margin-bottom: 1.25rem; line-height: 1.6;
+        }
+        /* Kustomisasi styling dari plugin Tailwind Typography */
+        .prose-custom { color: #52525b; }
+        .prose-custom ul > li::marker { color: #38bdf8; }
+        .prose-custom ol > li::marker { color: #38bdf8; }
+        .prose-custom a { color: #0ea5e9; text-decoration: none; font-weight: 500; transition: color 0.2s ease, text-decoration 0.2s ease; }
+        .prose-custom a:hover { color: #0284c7; text-decoration: underline; }
+        .prose-custom strong { color: #18181b; }
+        /* Navigasi Sticky */
+        .sticky-nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+            transition: all 0.3s ease;
+            background-image: linear-gradient(to right, #38bdf8, #67e8f9);
+            color: #1f2937;
+        }
+        body.scrolled .sticky-nav {
+             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+             background-image: linear-gradient(to right, #0ea5e9, #22d3ee);
+             color: white;
+        }
+        /* Styling link navigasi */
+        .sticky-nav a {
+            transition: color 0.2s ease, transform 0.2s ease;
+            color: #374151; padding: 0.25rem 0; position: relative;
+        }
+        .sticky-nav a::after {
+            content: ''; position: absolute; width: 0; height: 2px;
+            display: block; margin-top: 2px; right: 0;
+            background: #0369a1; transition: width 0.3s ease;
+        }
+        body.scrolled .sticky-nav a::after { background: white; }
+        .sticky-nav a:hover::after { width: 100%; left: 0; }
+        .sticky-nav a:hover { color: #0369a1; transform: translateY(-1px); }
+        body.scrolled .sticky-nav a { color: white; }
+        body.scrolled .sticky-nav a:hover { color: #e0f2fe; }
+        /* --- Flashcard Styling --- */
+        .flashcard-container { perspective: 1000px; }
+        .flashcard {
+            width: 100%; height: 160px; position: relative;
+            transform-style: preserve-3d; transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer; border-radius: 0.75rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .flashcard.is-flipped { transform: rotateY(180deg); }
+        .flashcard-face {
+            position: absolute; width: 100%; height: 100%;
+            backface-visibility: hidden; -webkit-backface-visibility: hidden;
+            border-radius: 0.75rem; display: flex; justify-content: center;
+            align-items: center; padding: 1.25rem; text-align: center; font-size: 1.1rem;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .flashcard-front {
+            background: linear-gradient(135deg, #a5f3fc, #cffafe);
+            color: #164e63; font-weight: 600;
+        }
+        .flashcard-back {
+            background: linear-gradient(135deg, #d9f99d, #f0fdf4);
+            color: #3f6212; transform: rotateY(180deg); font-size: 0.95rem;
+        }
+        /* Tombol Navigasi Flashcard */
+        .flashcard-nav-button {
+             background-color: #f8fafc; color: #64748b; border: 1px solid #e2e8f0;
+             padding: 0.5rem 1rem; border-radius: 9999px;
+             transition: all 0.2s ease; font-weight: 500;
+             display: inline-flex; align-items: center; gap: 0.3rem;
+        }
+         .flashcard-nav-button:hover:not(:disabled) {
+             background-color: #e2e8f0; color: #1e293b;
+             transform: translateY(-1px); box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+         }
+         .flashcard-nav-button:disabled { opacity: 0.5; cursor: not-allowed; }
+         .flashcard-nav-button svg { width: 1rem; height: 1rem; }
+         /* Tombol Shuffle */
+         .shuffle-button {
+             background-color: #fef9c3; color: #713f12;
+             border: 1px solid #fde68a;
+         }
+         .shuffle-button:hover:not(:disabled) {
+             background-color: #fde68a; color: #451a03;
+         }
+        /* Footer */
+         footer {
+             background-color: #e0f2fe; color: #38bdf8; border-top: 1px solid #bae6fd;
+             padding-top: 1.5rem; padding-bottom: 1.5rem; margin-bottom: 20px;
+         }
+         footer span.font-semibold { color: #0ea5e9; }
+         footer p.text-xs { color: #7dd3fc; }
+        /* --- Accordion Styling (Revisi v5) --- */
+        .accordion-item {
+            background-color: white; border-radius: 0.75rem; margin-bottom: 1rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07); border: 1px solid #e0f2fe;
+            overflow: hidden; transition: box-shadow 0.3s ease;
+        }
+        .accordion-item:hover { box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1); }
+        .accordion-header {
+            padding: 1rem 1.5rem; cursor: pointer; display: flex; justify-content: space-between;
+            align-items: center; border-bottom: 1px solid transparent;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        /* Efek hover header accordion */
+        .accordion-header:hover { background-color: #f0f9ff; } /* sky-50 */
+        #tahap1 .accordion-header:hover { background-color: #ecfeff; } /* cyan-50 */
+        #tahap2 .accordion-header:hover { background-color: #f7fee7; } /* lime-50 */
+        #tahap3 .accordion-header:hover { background-color: #fdf2f8; } /* pink-50 */
+        #tahap4 .accordion-header:hover { background-color: #fefce8; } /* yellow-50 */
+        .accordion-header h3 {
+             margin: 0; font-size: 1.25rem; font-weight: 600; display: flex;
+             align-items: center; transition: color 0.3s ease;
+        }
+        /* Warna header accordion sesuai tahap */
+        #tahap1 .accordion-header { background-color: #cffafe1a; }
+        #tahap2 .accordion-header { background-color: #ecfccb1a; }
+        #tahap3 .accordion-header { background-color: #fce7f31a; }
+        #tahap4 .accordion-header { background-color: #fef9c31a; }
+        #tahap1 .accordion-header h3 { color: #0891b2; }
+        #tahap2 .accordion-header h3 { color: #65a30d; }
+        #tahap3 .accordion-header h3 { color: #db2777; }
+        #tahap4 .accordion-header h3 { color: #ca8a04; }
+        .accordion-content {
+            padding: 0 1.5rem; max-height: 0; overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), padding 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .accordion-content-inner {
+             padding: 1.5rem 0;
+             opacity: 0; transition: opacity 0.4s ease-out 0.2s;
+        }
+        .accordion-item.open .accordion-content-inner { opacity: 1; }
+        .accordion-item.open .accordion-header { border-bottom-color: #e0f2fe; }
+        /* Warna header saat terbuka */
+        #tahap1.open .accordion-header { background-color: #a5f3fc; }
+        #tahap2.open .accordion-header { background-color: #d9f99d; }
+        #tahap3.open .accordion-header { background-color: #fbcfe8; }
+        #tahap4.open .accordion-header { background-color: #fde68a; }
+        #tahap1.open .accordion-header h3 { color: #164e63; }
+        #tahap2.open .accordion-header h3 { color: #3f6212; }
+        #tahap3.open .accordion-header h3 { color: #831843; }
+        #tahap4.open .accordion-header h3 { color: #78350f; }
+        .accordion-icon { transition: transform 0.4s ease; width: 1.5rem; height: 1.5rem; }
+        /* --- Gamification Elements --- */
+        .progress-bar-container {
+            background-color: #e0f2fe; border-radius: 9999px; overflow: hidden;
+            height: 12px; margin-bottom: 0.5rem; border: 1px solid #bae6fd;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .progress-bar {
+            background-image: linear-gradient(to right, #67e8f9, #22d3ee);
+            height: 100%; width: 0%;
+            transition: width 0.6s ease-out; border-radius: 9999px;
+        }
+        .gamification-stats {
+            display: flex; flex-wrap: wrap;
+            justify-content: space-between; align-items: center;
+            margin-bottom: 1rem; padding: 0.75rem 1.5rem;
+            background-color: #f0f9ff; border: 1px dashed #7dd3fc; border-radius: 0.75rem;
+        }
+        .gamification-stats > div { margin-bottom: 0.5rem; }
+        .gamification-stats span { font-weight: 600; color: #0ea5e9; }
+        .points-display {
+            font-size: 1.1rem; transition: transform 0.2s ease-out; /* Untuk efek pop */
+            display: inline-block; /* Agar transform bekerja */
+        }
+        .points-display.pop { transform: scale(1.2); } /* Efek pop saat poin bertambah */
+        .progress-text { font-size: 0.9rem; color: #0369a1; }
+        .completion-badge {
+            display: inline-block; margin-left: 0.5rem; color: #10b981;
+            opacity: 0; transition: opacity 0.3s ease;
+            font-weight: bold;
+        }
+        .accordion-item.completed .completion-badge { opacity: 1; }
+         /* Pesan Reward Poin */
+        .points-reward-message {
+            text-align: center; padding: 0.75rem; margin-bottom: 1rem;
+            background-color: #dcfce7; color: #166534;
+            border: 1px solid #86efac; border-radius: 0.5rem;
+            font-weight: 500; font-size: 0.9rem;
+            box-shadow: 0 2px 5px rgba(74, 222, 128, 0.15);
+        }
+        /* --- Badge System Styling --- */
+        .badges-container {
+            margin-bottom: 2rem; padding: 1rem 1.5rem; background-color: #f0f9ff;
+            border: 1px dashed #a5f3fc; border-radius: 0.75rem;
+            position: relative;
+        }
+        .badges-container h4 {
+            margin-top: 0; margin-bottom: 1rem; font-weight: 600;
+            color: #0ea5e9; text-align: center; font-size: 1.1rem;
+        }
+        .badges-grid {
+            display: flex; flex-wrap: wrap; gap: 1.25rem; justify-content: center;
+        }
+        .badge {
+            display: flex; flex-direction: column; align-items: center;
+            text-align: center; width: 85px;
+            opacity: 0.35; transition: opacity 0.4s ease, transform 0.3s ease;
+            position: relative;
+        }
+        .badge.earned {
+            opacity: 1;
+            transform: scale(1.08);
+        }
+        .badge-icon {
+            font-size: 2.8rem; line-height: 1; margin-bottom: 0.35rem;
+            filter: grayscale(90%); transition: filter 0.4s ease;
+        }
+        .badge.earned .badge-icon { filter: none; }
+        .badge-name {
+            font-size: 0.75rem; font-weight: 500; color: #94a3b8;
+            line-height: 1.2;
+        }
+        .badge.earned .badge-name {
+            color: #0ea5e9; font-weight: 600;
+        }
+        /* Tooltip (Revisi v5 - Tambah Tujuan Pembelajaran) */
+        .badge .tooltip {
+            visibility: hidden; width: 180px; /* Sedikit lebih lebar */ background-color: #374151;
+            color: #fff; text-align: center; border-radius: 6px; padding: 8px 12px;
+            position: absolute; z-index: 10; bottom: 125%; left: 50%; margin-left: -90px; /* Sesuaikan */
+            opacity: 0; transition: opacity 0.3s; font-size: 0.75rem;
+            pointer-events: none; white-space: normal;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .badge .tooltip::after {
+            content: ""; position: absolute; top: 100%; left: 50%;
+            margin-left: -5px; border-width: 5px; border-style: solid;
+            border-color: #374151 transparent transparent transparent;
+        }
+        .badge:hover .tooltip { visibility: visible; opacity: 1; }
+        .tooltip-criteria {
+            display: block; font-size: 0.7rem; color: #d1d5db;
+            margin-top: 4px; font-style: italic;
+        }
+        .tooltip-objective { /* Styling untuk tujuan pembelajaran */
+             display: block; font-size: 0.7rem; color: #a5f3fc; /* Cyan */
+             margin-top: 4px; font-weight: 500;
+        }
+        /* --- Badge Notification Styling --- */
+        .badge-notification {
+            position: fixed; bottom: 20px; left: 50%;
+            transform: translateX(-50%) translateY(120%);
+            background-color: #10b981; color: white;
+            padding: 0.8rem 1.6rem; border-radius: 8px;
+            font-size: 0.95rem; font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.4s ease-out, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            white-space: nowrap;
+            z-index: 100;
+        }
+        .badge-notification.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        /* --- Watermark Styling --- */
+        .watermark {
+            position: fixed; bottom: 5px; right: 10px;
+            font-size: 0.7rem; color: #94a3b8; opacity: 0.6;
+            z-index: 40; pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-sky-50"
+      x-data="pageData()"
+      @quiz-completed.window="handleQuizCompletion($event.detail)"
+      @accordion-completed.window="handleAccordionCompletion($event.detail)"
+      @flashcard-viewed.window="handleFlashcardView($event.detail)"
+      @all-flashcards-viewed.window="handleAllFlashcardsViewed()"
+      @update-progress.window="updateProgress()"
+      @badge-earned.window="showBadgeNotification($event.detail.name)"
+      >
+    <header class="sticky-nav shadow-md" @scroll.window="document.body.classList.toggle('scrolled', window.scrollY > 50)">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+             <div class="flex items-center space-x-2">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-600 transition-colors duration-300" :class="{'text-white': document.body.classList.contains('scrolled')}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                 </svg>
+                 <span class="text-xl font-bold tracking-wide">SOSIOLOGI 101</span>
+            </div>
+            <nav class="hidden md:flex space-x-7">
+                <a href="#judul" class="text-sm font-medium">Pengantar</a>
+                <a href="#info-modul" class="text-sm font-medium">Info</a>
+                <a href="#tujuan" class="text-sm font-medium">Tujuan</a>
+                <a href="#materi-belajar" class="text-sm font-medium">Materi</a>
+                <a href="#flashcards" class="text-sm font-medium">Flashcard</a>
+                <a href="#penutup" class="text-sm font-medium">Penutup</a>
+            </nav>
+            <div class="md:hidden">
+                <button @click="navOpen = !navOpen" class="focus:outline-none p-1 rounded transition duration-200" :class="{'text-white': document.body.classList.contains('scrolled'), 'text-gray-700': !document.body.classList.contains('scrolled') }">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" x-show="!navOpen"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" x-show="navOpen" style="display: none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div x-show="navOpen" @click.away="navOpen = false" class="md:hidden bg-white border-t border-sky-200 shadow-lg" x-transition style="display: none;">
+            <nav class="flex flex-col px-4 py-4 space-y-2">
+                <a href="#judul" @click="navOpen = false" class="block py-2 px-3 rounded hover:bg-sky-100 text-gray-700 transition duration-200">Pengantar</a>
+                <a href="#info-modul" @click="navOpen = false" class="block py-2 px-3 rounded hover:bg-sky-100 text-gray-700 transition duration-200">Info Modul</a>
+                <a href="#tujuan" @click="navOpen = false" class="block py-2 px-3 rounded hover:bg-sky-100 text-gray-700 transition duration-200">Tujuan Belajar</a>
+                <a href="#materi-belajar" @click="navOpen = false" class="block py-2 px-3 rounded hover:bg-sky-100 text-gray-700 transition duration-200">Materi Belajar</a>
+                <a href="#flashcards" @click="navOpen = false" class="block py-2 px-3 rounded hover:bg-sky-100 text-gray-700 transition duration-200">Flashcard</a>
+                <a href="#penutup" @click="navOpen = false" class="block py-2 px-3 rounded hover:bg-sky-100 text-gray-700 transition duration-200">Penutup</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container mx-auto px-6 py-12">
+        <section id="judul" class="mb-12 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-sky-600 mb-4">Selamat Datang di Dunia Sosiologi!</h1>
+            <p class="lead max-w-3xl mx-auto">
+                Di sini kita akan mengupas tuntas mengapa masyarakat berfungsi seperti sekarang, dari tren terbaru hingga masalah sosial yang kompleks. Siap melihat dunia dengan kacamata baru yang lebih seru? Ayo mulai!
+            </p>
+            <button class="simple-button" onclick="document.getElementById('info-modul').scrollIntoView()">
+                Mulai Belajar!
+                <svg xmlns="http://www.w3.org/2000/svg" class="hero-icon inline-block ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+            </button>
+        </section>
+        <section id="info-modul" class="mb-12 p-6 bg-white rounded-lg shadow-lg border border-sky-100">
+            <h2 class="text-2xl font-semibold text-sky-600 mb-4 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="hero-icon mr-2 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                Informasi Modul
+            </h2>
+            <div class="prose prose-custom max-w-none">
+                <ul>
+                    <li><strong>Mata Pelajaran:</strong> Sosiologi</li>
+                    <li><strong>Target Audiens:</strong> Pemula (tidak perlu pengetahuan sebelumnya)</li>
+                    <li><strong>Estimasi Waktu:</strong> 60 - 90 menit</li>
+                    <li><strong>Fokus:</strong> Pengenalan konsep dasar, tokoh, dan cara berpikir sosiologis.</li>
+                    <li><strong>Fitur:</strong> Materi interaktif, kuis (pilihan ganda & B/S), flashcard (acak), poin & badges.</li>
+                </ul>
+            </div>
+        </section>
+        <section id="tujuan" class="mb-12">
+             <h2 class="text-2xl font-semibold text-sky-600 mb-4 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="hero-icon mr-2 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                Tujuan Pembelajaran
+            </h2>
+            <div class="prose prose-custom max-w-none mb-6">
+                <p>Setelah menyelesaikan modul ini, Anda diharapkan dapat:</p>
+                <ol>
+                    <li>(TP1) Menjelaskan apa itu sosiologi dengan bahasa sederhana dan mengapa itu relevan.</li>
+                    <li>(TP2) Mengenali beberapa tokoh kunci dan ide dasar mereka.</li>
+                    <li>(TP3) Membedakan tiga cara utama sosiolog melihat masyarakat (perspektif).</li>
+                    <li>(TP4) Mengidentifikasi konsep-konsep penting seperti norma, nilai, dan kelompok sosial.</li>
+                    <li>(TP5) Mulai menggunakan 'kacamata sosiologi' untuk mengamati kejadian sehari-hari.</li>
+                </ol>
+            </div>
+             <div class="interactive-box">
+                <h5>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="hero-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 15.875c1.248-1.33 1.87-2.903 1.87-4.597 0-1.7-.623-3.268-1.87-4.598m8.75 9.196c-1.248 1.33-1.87 2.903-1.87 4.597 0 1.7.623 3.268 1.87 4.598M12 21a9 9 0 100-18 9 9 0 000 18z" /></svg>
+                    Refleksi Ceria!
+                </h5>
+                <p>Pernahkah kamu berpikir mengapa orang di sekitarmu bertingkah laku dengan cara tertentu? Ceritakan sedikit!</p>
+                <textarea class="reflection-textarea" placeholder="Contoh: Kenapa teman-teman suka hal yang sama, kenapa ada aturan di rumah/sekolah... (tidak disimpan)"></textarea>
+                </div>
+        </section>
+         <section id="gamification" class="mb-12">
+            <h2 class="text-2xl font-semibold text-sky-600 mb-6 text-center">Progres Belajar Kamu!</h2>
+            <div class="points-reward-message" x-show="showPointsReward" x-transition>
+                 🎉  Selamat! Kamu telah mencapai <span x-text="pointsRewardThreshold"></span> poin! Terus semangat belajar!  🎉
+            </div>
+            <div class="gamification-stats mb-6">
+                <div class="text-center">
+                    <div class="points-display">Poin: <span id="pointsValue" x-text="totalPoints">0</span></div>
+                    <div class="progress-text">Total Poin Maksimal: <span x-text="maxPoints"></span></div>
+                </div>
+                <div class="w-full md:w-1/2">
+                     <div class="progress-text text-right mb-1" x-text="`${maxPoints > 0 ? Math.round((totalPoints / maxPoints) * 100) : 0}% Selesai`">0% Selesai</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" :style="`width: ${maxPoints > 0 ? (totalPoints / maxPoints) * 100 : 0}%`"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="badges-container relative">
+                <h4> 🏆  Koleksi Badges Kamu  🏆 </h4>
+                <div class="badges-grid">
+                    <template x-for="badge in badges" :key="badge.id">
+                        <div class="badge" :class="{ 'earned': earnedBadges.includes(badge.id) }">
+                            <span class="badge-icon" x-text="badge.icon"></span>
+                            <span class="badge-name" x-text="badge.name"></span>
+                            <div class="tooltip">
+                                <strong x-text="badge.name"></strong><br>
+                                <span x-text="badge.description"></span>
+                                <span class="tooltip-criteria" x-text="`Cara dapat: ${badge.criteria}`"></span>
+                                <span class="tooltip-objective" x-show="badge.objective" x-text="`Terkait TP: ${badge.objective}`"></span>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                 <div class="badge-notification" x-show="showNotification" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 transform translate-x-[-50%] translateY-[120%]" x-transition:enter-end="opacity-100 transform translate-x-[-50%] translateY-0" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 transform translate-x-[-50%] translateY-0" x-transition:leave-end="opacity-0 transform translate-x-[-50%] translateY-[120%]" @click="showNotification = false">
+                     ✨  Badge Baru Didapatkan: <strong x-text="lastBadgeEarned"></strong>!  ✨
+                </div>
+            </div>
+        </section>
+        <section id="materi-belajar" class="mb-12">
+            <h2 class="text-2xl font-semibold text-sky-600 mb-6">Materi Belajar Interaktif</h2>
+            <div x-data="accordionData()">
+                <div :id="'tahap1'" class="accordion-item" :class="{'open': openAccordion === 'tahap1', 'completed': completedAccordions.includes('tahap1')}">
+                    <div class="accordion-header" @click="toggleAccordion('tahap1')">
+                        <h3>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="hero-icon mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            Tahap 1: Apa Sih Sosiologi Itu?
+                            <span class="completion-badge"> ✓ </span>
+                        </h3>
+                        <svg x-show="openAccordion !== 'tahap1'" xmlns="http://www.w3.org/2000/svg" class="accordion-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                         <svg x-show="openAccordion === 'tahap1'" xmlns="http://www.w3.org/2000/svg" class="accordion-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display: none;"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
+                    <div class="accordion-content" x-ref="content1" :style="openAccordion === 'tahap1' ? `max-height: ${$refs.content1.scrollHeight}px; padding-top: 1.5rem; padding-bottom: 1.5rem;` : ''">
+                        <div class="accordion-content-inner prose prose-custom max-w-none">
+                            <p>Pernah nggak sih kamu heran kenapa orang suka ikut-ikutan tren? Atau kenapa ada aturan nggak tertulis di tongkrongan? Nah, <strong>Sosiologi</strong> itu ilmu yang coba menjawab pertanyaan-pertanyaan kayak gitu!</p>
+                            <p>Secara sederhana, Sosiologi adalah <strong>studi tentang bagaimana orang hidup bersama dalam kelompok atau masyarakat</strong>. Kita melihat pola-pola perilaku, interaksi, dan hal-hal yang memengaruhi cara kita hidup bareng.</p>
+                            <blockquote class="border-l-4 border-sky-300 bg-sky-50 p-3 rounded-r-lg italic text-sky-800">
+                                "Sosiologi membantu kita melihat hal-hal yang biasa kita anggap remeh menjadi sesuatu yang menarik dan penuh makna."
+                            </blockquote>
+                            <h4>Apa yang Dipelajari Sosiolog?</h4>
+                            <ul>
+                                <li><strong class="text-sky-600">Interaksi Sosial:</strong> Bagaimana kita ngobrol, bekerja sama, atau bahkan konflik dengan orang lain.</li>
+                                <li><strong class="text-sky-600">Kelompok Sosial:</strong> Keluarga, teman main, teman kantor, sampai negara!</li>
+                                <li><strong class="text-sky-600">Struktur Sosial:</strong> Pola hubungan yang 'ngatur' masyarakat, kayak kelas sosial atau sistem pendidikan.</li>
+                                <li><strong class="text-sky-600">Budaya:</strong> Nilai, kepercayaan, bahasa, dan kebiasaan yang kita anut bersama.</li>
+                                <li><strong class="text-sky-600">Masalah Sosial:</strong> Kenapa ada kemiskinan, kejahatan, atau ketidakadilan?</li>
+                            </ul>
+                            <p>Intinya, kalau berhubungan sama kehidupan orang banyak, kemungkinan besar itu bisa dipelajari pakai kacamata sosiologi!</p>
+                             <div x-data="quiz({
+                                id: 'quiz1', points: 5,
+                                question: 'Mana contoh yang PALING mungkin dipelajari oleh seorang sosiolog?',
+                                options: ['Cara kerja mesin mobil', 'Pengaruh media sosial pada remaja', 'Komposisi kimia air hujan', 'Migrasi burung di musim dingin'],
+                                correctAnswer: 'Pengaruh media sosial pada remaja',
+                                hint: 'Sosiologi fokus pada interaksi dan fenomena dalam masyarakat manusia.'
+                            })" class="interactive-box mt-6 border-sky-400 bg-sky-50">
+                                <h5 class="text-sky-600"><svg xmlns="http://www.w3.org/2000/svg" class="hero-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>Kuis Ceria 1!</h5>
+                                <p x-text="question" class="font-medium mb-3 text-sky-700"></p>
+                                <template x-for="(option, index) in options" :key="index"><div class="quiz-option"><label><input type="radio" :name="`quiz-${id}`" :value="option" x-model="selectedAnswer" :disabled="submitted" class="form-radio text-sky-500 focus:ring-sky-400"><span class="ml-2 text-sky-700" x-text="option"></span></label></div></template>
+                                <button @click="submitAnswer()" x-show="!submitted" class="simple-button mt-3">Cek Jawaban</button>
+                                <div x-show="submitted" class="quiz-feedback" :class="isCorrect ? 'correct' : 'incorrect'"><strong x-text="isCorrect ? ' ✨  Jawaban Benar!' : ' 🙁  Jawaban Kurang Tepat.'"></strong><span x-text="feedbackText"></span><span x-show="!isCorrect && hint" class="hint" x-text="`Petunjuk: ${hint}`"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div :id="'tahap2'" class="accordion-item" :class="{'open': openAccordion === 'tahap2', 'completed': completedAccordions.includes('tahap2')}">
+                     <div class="accordion-header" @click="toggleAccordion('tahap2')">
+                        <h3>
+                             <svg xmlns="http://www.w3.org/2000/svg" class="hero-icon mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                            Tahap 2: Para Pemikir & Cara Pandang
+                            <span class="completion-badge"> ✓ </span>
+                        </h3>
+                         <svg x-show="openAccordion !== 'tahap2'" xmlns="http://www.w3.org/2000/svg" class="accordion-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                         <svg x-show="openAccordion === 'tahap2'" xmlns="http://www.w3.org/2000/svg" class="accordion-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display: none;"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
+                    <div class="accordion-content" x-ref="content2" :style="openAccordion === 'tahap2' ? `max-height: ${$refs.content2.scrollHeight}px; padding-top: 1.5rem; padding-bottom: 1.5rem;` : ''">
+                        <div class="accordion-content-inner prose prose-custom max-w-none">
+                            <p>Sosiologi nggak ujug-ujug ada. Ada banyak pemikir keren yang bantu membangun ilmu ini. Yuk, kenalan singkat!</p>
+                            <h4>Beberapa Tokoh Kunci:</h4>
+                            <ul>
+                                <li><strong>Auguste Comte:</strong> Si "Bapak Sosiologi" yang pertama kali pakai istilah ini.</li>
+                                <li><strong>Karl Marx:</strong> Terkenal dengan idenya tentang konflik antar kelas (si kaya vs si miskin) sebagai pendorong perubahan.</li>
+                                <li><strong>Emile Durkheim:</strong> Fokus pada bagaimana masyarakat tetap bersatu (solidaritas) dan apa jadinya kalau aturan sosial melemah (dia sebut ini <i>anomi</i>, kayak kondisi 'bingung arah').</li>
+                                <li><strong>Max Weber:</strong> Membahas kenapa orang bertindak (tindakan sosial) dan bagaimana masyarakat jadi makin teratur dan pakai aturan (rasionalisasi).</li>
+                            </ul>
+                             <hr class="my-4 border-lime-200">
+                             <h4>3 Kacamata Utama Sosiologi (Perspektif):</h4>
+                             <p>Bayangkan kamu punya 3 kacamata berbeda untuk melihat masyarakat:</p>
+                            <ol>
+                                <li><strong>Kacamata Fungsionalisme:</strong> Melihat masyarakat kayak tubuh manusia. Setiap bagian (keluarga, sekolah, pemerintah) punya fungsi penting untuk menjaga semuanya berjalan lancar dan stabil. Kadang ada fungsi yang jelas (<em>manifes</em>, misal sekolah untuk belajar), kadang ada fungsi tersembunyi (<em>laten</em>, misal sekolah jadi tempat cari jodoh  😄 ).</li>
+                                <li><strong>Kacamata Konflik:</strong> Melihat masyarakat sebagai arena pertarungan. Selalu ada kelompok yang bersaing memperebutkan sumber daya (uang, kekuasaan). Ketidaksetaraan ini yang bikin masyarakat terus berubah.</li>
+                                <li><strong>Kacamata Interaksionisme Simbolik:</strong> Fokusnya ke interaksi kecil sehari-hari. Bagaimana kita memberi makna pada simbol (bahasa, gestur, bendera) dan bagaimana makna ini membentuk cara kita bertindak dan melihat dunia.</li>
+                            </ol>
+                            <p>Nggak ada kacamata yang paling benar, masing-masing punya kelebihan untuk melihat sisi masyarakat yang berbeda.</p>
+                             <div x-data="quiz({
+                                id: 'quiz2', points: 5,
+                                question: 'Menurut kacamata Fungsionalisme, konflik antar kelompok adalah hal utama yang dipelajari dalam masyarakat.',
+                                options: ['Benar', 'Salah'], // Opsi untuk Benar/Salah
+                                correctAnswer: 'Salah',
+                                hint: 'Fungsionalisme fokus pada stabilitas dan fungsi, sementara Teori Konflik fokus pada pertarungan/ketidaksetaraan.'
+                            })" class="interactive-box mt-6 border-lime-400 bg-lime-50">
+                                <h5 class="text-lime-600"><svg xmlns="http://www.w3.org/2000/svg" class="hero-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>Kuis Ceria 2! (Benar/Salah)</h5>
+                                <p x-text="question" class="font-medium mb-3 text-lime-700"></p>
+                                <template x-for="(option, index) in options" :key="index"><div class="quiz-option"><label><input type="radio" :name="`quiz-${id}`" :value="option" x-model="selectedAnswer" :disabled="submitted" class="form-radio text-lime-500 focus:ring-lime-400"><span class="ml-2 text-lime-700" x-text="option"></span></label></div></template>
+                                <button @click="submitAnswer()" x-show="!submitted" class="simple-button mt-3 !bg-gradient-to-r !from-lime-400 !to-green-400 hover:!from-lime-500 hover:!to-green-500">Cek Jawaban</button>
+                                <div x-show="submitted" class="quiz-feedback" :class="isCorrect ? 'correct' : 'incorrect'"><strong x-text="isCorrect ? ' ✨  Jawaban Benar!' : ' 🙁  Jawaban Kurang Tepat.'"></strong><span x-text="feedbackText"></span><span x-show="!isCorrect && hint" class="hint" x-text="`Petunjuk: ${hint}`"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <div :id="'tahap3'" class="accordion-item" :class="{'open': openAccordion === 'tahap3', 'completed': completedAccordions.includes('tahap3')}">
+                     <div class="accordion-header" @click="toggleAccordion('tahap3')">
+                        <h3>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="hero-icon mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg>
+                            Tahap 3: 'Bahan Dasar' Masyarakat
+                            <span class="completion-badge"> ✓ </span>
+                        </h3>
+                         <svg x-show="openAccordion !== 'tahap3'" xmlns="http://www.w3.org/2000/svg" class="accordion-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                         <svg x-show="openAccordion === 'tahap3'" xmlns="http://www.w3.org/2000/svg" class="accordion-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display: none;"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
+                    <div class="accordion-content" x-ref="content3" :style="openAccordion === 'tahap3' ? `max-height: ${$refs.content3.scrollHeight}px; padding-top: 1.5rem; padding-bottom: 1.5rem;` : ''">
+                        <div class="accordion-content-inner prose prose-custom max-w-none">
+                             <p>Untuk 'membongkar' masyarakat, sosiolog pakai beberapa konsep penting ini:</p>
+                            <ul>
+                                <li><strong class="text-pink-600">Struktur Sosial:</strong> Kerangka masyarakat, pola hubungan yang udah mapan (misal: ada kaya-miskin, ada sistem kasta).</li>
+                                <li><strong class="text-pink-600">Institusi Sosial:</strong> Sistem aturan main untuk kebutuhan penting (misal: keluarga ngurus anak, sekolah ngurus pendidikan, pasar ngurus ekonomi).</li>
+                                <li><strong class="text-pink-600">Kelompok Sosial:</strong> Kumpulan orang yang sering interaksi & punya tujuan bareng (geng main, klub bola, teman sekelas).</li>
+                                <li><strong class="text-pink-600">Norma Sosial:</strong> Aturan nggak tertulis (kayak sopan santun) atau tertulis (hukum) tentang cara bertingkah laku.</li>
+                                <li><strong class="text-pink-600">Nilai Sosial:</strong> Ide tentang apa yang dianggap bagus, penting, atau bener di masyarakat (misal: kejujuran, kerja keras, gotong royong).</li>
+                                <li><strong class="text-pink-600">Status & Peran:</strong> Status itu posisi kamu (pelajar, anak, ketua RT), Peran itu apa yang diharapkan dari posisi itu (pelajar ya belajar, ketua RT ya ngurus warga).</li>
+                            </ul>
+                             <div class="real-example-box">
+                                <h5><svg xmlns="http://www.w3.org/2000/svg" class="hero-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 18.657A8.25 8.25 0 0112 20.25a8.25 8.25 0 01-5.657-1.593m11.314 0A8.225 8.225 0 0012 16.5a8.225 8.225 0 00-5.657 2.157m11.314 0L12 18.75l-5.657 1.593m11.314 0A8.25 8.25 0 0012 3.75a8.25 8.25 0 00-5.657 1.593m11.314 0L12 5.25 6.343 3.657m11.314 0A8.25 8.25 0 0112 20.25a8.25 8.25 0 01-5.657-1.593M12 12a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" /></svg>Contoh Nyata: Norma & Nilai</h5>
+                                <p>Di banyak tempat di Indonesia, <strong>nilai</strong> gotong royong itu penting. Nah, <strong>norma</strong>-nya bisa berupa ikut kerja bakti membersihkan lingkungan setiap minggu atau membantu tetangga yang sedang hajatan. Melanggar norma ini (nggak pernah ikut kerja bakti) bisa bikin kamu dicap 'nggak sosial'.</p>
+                             </div>
+                             <div class="interactive-box mt-6 border-pink-400 bg-pink-50">
+                                <h5 class="text-pink-600"><svg xmlns="http://www.w3.org/2000/svg" class="hero-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" /></svg>Diskusi Ceria!</h5>
+                                <p class="text-pink-700">Sebutkan satu contoh <strong>norma informal</strong> dan satu contoh <strong>nilai sosial</strong> yang penting di komunitas Anda.</p>
+                                <textarea class="reflection-textarea !border-pink-200 !bg-pink-100 !text-pink-900 placeholder:!text-pink-700" placeholder="Norma: ..., Nilai: ... (tidak disimpan)"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <div :id="'tahap4'" class="accordion-item" :class="{'open': openAccordion === 'tahap4', 'completed': completedAccordions.includes('tahap4')}">
+                     <div class="accordion-header" @click="toggleAccordion('tahap4')">
+                        <h3>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="hero-icon mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                            Tahap 4: Pakai Kacamata Sosiologi!
+                            <span class="completion-badge"> ✓ </span>
+                        </h3>
+                         <svg x-show="openAccordion !== 'tahap4'" xmlns="http://www.w3.org/2000/svg" class="accordion-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                         <svg x-show="openAccordion === 'tahap4'" xmlns="http://www.w3.org/2000/svg" class="accordion-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display: none;"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
+                    <div class="accordion-content" x-ref="content4" :style="openAccordion === 'tahap4' ? `max-height: ${$refs.content4.scrollHeight}px; padding-top: 1.5rem; padding-bottom: 1.5rem;` : ''">
+                        <div class="accordion-content-inner prose prose-custom max-w-none">
+                            <p>Sekarang bagian serunya! Sosiologi itu bukan cuma teori, tapi alat bantu buat ngerti dunia nyata. Ada konsep keren namanya <strong>"Imajinasi Sosiologis"</strong> (dari C. Wright Mills). Intinya, kita belajar menghubungkan masalah pribadi kita (misal: susah cari kerja) dengan masalah sosial yang lebih besar (misal: kondisi ekonomi negara, persaingan tinggi).</p>
+                            <h4>Kenapa Ini Penting?</h4>
+                            <ul>
+                                <li>Biar nggak nyalahin diri sendiri terus kalau ada masalah.</li>
+                                <li>Bisa lihat akar masalah yang lebih dalam.</li>
+                                <li>Jadi lebih kritis sama informasi dan nggak gampang percaya hoaks.</li>
+                                <li>Lebih ngerti kenapa orang lain punya pandangan beda.</li>
+                            </ul>
+                            <p>Dengan kacamata sosiologi, kita bisa lihat pola-pola di balik kejadian sehari-hari.</p>
+                            <div x-data="quiz({
+                                id: 'quiz3', points: 5,
+                                question: 'Skenario: Di sebuah sekolah, terjadi persaingan ketat antar siswa untuk masuk universitas favorit. Banyak siswa merasa stres dan tertekan. Kacamata sosiologi mana yang paling cocok untuk menganalisis FOKUS pada persaingan dan ketidaksetaraan peluang ini?',
+                                options: ['Fungsionalisme', 'Konflik', 'Interaksionisme Simbolik'],
+                                correctAnswer: 'Konflik',
+                                hint: 'Perspektif mana yang fokus pada persaingan memperebutkan sumber daya (dalam hal ini, kursi universitas)?'
+                             })" class="interactive-box mt-6 border-yellow-400 bg-yellow-50">
+                                <h5 class="text-yellow-600"><svg xmlns="http://www.w3.org/2000/svg" class="hero-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.21 11.35A8.25 8.25 0 1111.35 3.79a8.25 8.25 0 017.86 7.56zM12 18a6 6 0 100-12 6 6 0 000 12z" /></svg>Kuis Analisis Skenario!</h5>
+                                <p x-text="question" class="font-medium mb-3 text-yellow-700"></p>
+                                <template x-for="(option, index) in options" :key="index"><div class="quiz-option"><label><input type="radio" :name="`quiz-${id}`" :value="option" x-model="selectedAnswer" :disabled="submitted" class="form-radio text-yellow-500 focus:ring-yellow-400"><span class="ml-2 text-yellow-700" x-text="option"></span></label></div></template>
+                                <button @click="submitAnswer()" x-show="!submitted" class="simple-button mt-3 !bg-gradient-to-r !from-yellow-400 !to-amber-400 hover:!from-yellow-500 hover:!to-amber-500">Cek Jawaban</button>
+                                <div x-show="submitted" class="quiz-feedback" :class="isCorrect ? 'correct' : 'incorrect'"><strong x-text="isCorrect ? ' ✨  Jawaban Benar!' : ' 🙁  Jawaban Kurang Tepat.'"></strong><span x-text="feedbackText"></span><span x-show="!isCorrect && hint" class="hint" x-text="`Petunjuk: ${hint}`"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> </section>
+        <section id="flashcards" class="mb-12">
+             <h2 class="text-2xl font-semibold text-sky-600 mb-6">Uji Ingatan dengan Flashcard!</h2>
+             <div x-data="flashcardData()" class="max-w-lg mx-auto">
+                <div class="flashcard-container mb-4">
+                    <div class="flashcard" :class="{ 'is-flipped': cardFlipped }" @click="flipCard()">
+                        <div class="flashcard-face flashcard-front"><span x-text="currentCard.term"></span></div>
+                        <div class="flashcard-face flashcard-back"><span x-text="currentCard.definition"></span></div>
+                    </div>
+                </div>
+                <div class="flex justify-between items-center mb-3">
+                    <button @click="prevCard()" :disabled="currentIndex === 0" class="flashcard-nav-button"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg>Sebelumnya</button>
+                    <span class="text-sm text-slate-500">Kartu <span x-text="currentIndex + 1"></span> dari <span x-text="cards.length"></span> (<span x-text="viewedCards.length"></span> dilihat)</span>
+                    <button @click="nextCard()" :disabled="currentIndex === cards.length - 1" class="flashcard-nav-button">Berikutnya<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg></button>
+                </div>
+                 <div class="text-center mb-3">
+                     <button @click="shuffleCards()" class="flashcard-nav-button shuffle-button"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l-3-3m3 3-3 3m-12-3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3 3-3" /></svg>Acak Kartu</button>
+                 </div>
+                 <p class="text-xs text-center text-slate-400 mt-3">Klik kartu untuk melihat definisi. Setiap kartu dilihat dapat 1 poin!</p>
+            </div>
+        </section>
+        <section id="penutup" class="text-center mt-16 mb-8">
+            <h2 class="text-3xl font-semibold text-sky-600 mb-4">Selamat! Kamu Telah Menyelesaikan Modul Ini!</h2>
+            <p class="lead max-w-2xl mx-auto">
+                Kamu telah mempelajari dasar-dasar sosiologi. Semoga pengetahuan ini bermanfaat dan membuatmu semakin tertarik untuk mengamati masyarakat di sekitarmu. Teruslah belajar dan gunakan imajinasi sosiologismu!
+            </p>
+             <div class="interactive-box max-w-xl mx-auto mt-8 !border-purple-400 !bg-purple-50">
+                 <h5 class="!text-purple-600 justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="hero-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>Langkah Selanjutnya</h5>
+                <p class="!text-purple-700">Topik sosiologi apa lagi yang menarik minatmu? Bagaimana kamu akan menerapkan 'imajinasi sosiologis' minggu ini?</p>
+                 <textarea class="reflection-textarea !border-purple-200 !bg-purple-100 !text-purple-900 placeholder:!text-purple-700" placeholder="Topik: ..., Penerapan: ... (tidak disimpan)"></textarea>
+            </div>
+        </section>
+    </main>
+    <footer class="text-center py-6">
+        <p class="text-sm">&copy; <span id="current-year"></span> <span class="font-semibold">Belajar Sosiologi Ceria</span>. Hak Cipta Dilindungi.</p>
+        <p class="text-xs mt-1">Dibuat dengan <span class="text-red-500">&hearts;</span> untuk pembelajaran yang menyenangkan.</p>
+    </footer>
+    <div class="watermark">Dibuat oleh Natanael Anang Yuanda</div>
+    <script>
+        // --- Fungsi Data Utama Alpine.js ---
+        function pageData() {
+            return {
+                navOpen: false,
+                totalPoints: 0,
+                // Revisi v5: Definisikan struktur poin di sini
+                pointStructure: {
+                    quiz1: 5, quiz2: 5, quiz3: 5, // Poin per kuis
+                    flashcard: 1, // Poin per flashcard unik dilihat
+                    accordion: 2.5, // Poin per accordion selesai
+                    totalQuizzes: 3,
+                    totalFlashcards: 7, // Sesuaikan jika jumlah kartu berubah
+                    totalAccordions: 4
+                },
+                maxPoints: 0, // Akan dihitung di init
+                earnedBadges: [],
+                completedQuizzes: [],
+                completedAccordions: [],
+                viewedFlashcardsCount: 0,
+                allFlashcardsViewed: false,
+                showNotification: false,
+                lastBadgeEarned: '',
+                notificationTimeout: null,
+                showPointsReward: false,
+                pointsRewardThreshold: 20, // Bisa disesuaikan atau dihitung dari maxPoints
+                // --- Data Badge (Revisi v5 - Tambah Objective) ---
+                badges: [
+                    { id: 'newbie', name: 'Pendatang Baru', icon: ' 🌱 ', description: 'Memulai perjalanan sosiologi!', criteria: 'Selesaikan Kuis pertama', objective: 'TP1' },
+                    { id: 'explorer', name: 'Penjelajah Konsep', icon: ' 🧭 ', description: 'Mulai memahami konsep dasar.', criteria: 'Selesaikan 2 Tahap Materi', objective: 'TP4' },
+                    { id: 'thinker', name: 'Pemikir Kritis', icon: ' 🤔 ', description: 'Menguasai perspektif utama.', criteria: 'Selesaikan Kuis ke-2 (B/S)', objective: 'TP3' },
+                    { id: 'cardmaster', name: 'Master Flashcard', icon: ' 🃏 ', description: 'Melihat semua flashcard.', criteria: 'Lihat semua Flashcard', objective: 'TP2, TP4' }, // Bisa terkait >1 TP
+                    { id: 'sociologist', name: 'Sosiolog Muda', icon: ' 🎓 ', description: 'Menyelesaikan semua materi!', criteria: 'Selesaikan semua Tahap Materi', objective: 'Semua TP' },
+                    { id: 'quizwhiz', name: 'Jagoan Kuis', icon: ' 💡 ', description: 'Menjawab semua kuis dengan benar!', criteria: 'Selesaikan semua Kuis', objective: 'TP1, TP3, TP5' }
+                ],
+                // --- Inisialisasi ---
+                init() {
+                    this.calculateMaxPoints();
+                    // Hitung threshold reward jika perlu (misal 75% dari maxPoints)
+                    // this.pointsRewardThreshold = Math.floor(this.maxPoints * 0.75);
+                    this.updateProgress();
+                    console.log("Page data initialized. Max points:", this.maxPoints, "Reward threshold:", this.pointsRewardThreshold);
+                },
+                // --- Fungsi Perhitungan Poin Maksimal (Revisi v5) ---
+                calculateMaxPoints() {
+                    let max = 0;
+                    max += (this.pointStructure.quiz1 || 0);
+                    max += (this.pointStructure.quiz2 || 0);
+                    max += (this.pointStructure.quiz3 || 0);
+                    max += (this.pointStructure.totalFlashcards || 0) * (this.pointStructure.flashcard || 0);
+                    max += (this.pointStructure.totalAccordions || 0) * (this.pointStructure.accordion || 0);
+                    this.maxPoints = max;
+                },
+                // --- Fungsi Manajemen Poin (Revisi v5 - Efek Pop) ---
+                addPoints(amount) {
+                    if (amount <= 0) return; // Jangan proses jika tidak ada poin
+                    this.totalPoints += amount;
+                    this.totalPoints = Math.max(0, Math.min(this.totalPoints, this.maxPoints));
+                    console.log(`Points added: ${amount}. Total points: ${this.totalPoints}`);
+                    // Efek visual pada poin
+                    const pointsElement = document.getElementById('pointsValue');
+                    if (pointsElement) {
+                        pointsElement.parentElement.classList.add('pop');
+                        setTimeout(() => {
+                            pointsElement.parentElement.classList.remove('pop');
+                        }, 200); // Durasi efek pop
+                    }
+                    this.checkPointsReward();
+                    this.updateProgress();
+                    this.checkBadges();
+                },
+                // --- Update Progress ---
+                updateProgress() {
+                    console.log("Progress updated event received. Total points:", this.totalPoints);
+                },
+                // --- Event Handlers ---
+                handleQuizCompletion(detail) {
+                     if (!this.completedQuizzes.includes(detail.id)) {
+                        console.log(`Quiz ${detail.id} completed. Correct: ${detail.correct}`);
+                        this.completedQuizzes.push(detail.id);
+                        if (detail.correct) {
+                            // Ambil poin dari pointStructure
+                            const pointsToAdd = this.pointStructure[detail.id] || 0;
+                            this.addPoints(pointsToAdd);
+                        } else {
+                            this.checkBadges(); // Tetap cek badge jika salah
+                        }
+                    }
+                },
+                handleAccordionCompletion(detail) {
+                    if (!this.completedAccordions.includes(detail.id)) {
+                        console.log(`Accordion ${detail.id} marked as completed.`);
+                        this.completedAccordions.push(detail.id);
+                        this.addPoints(this.pointStructure.accordion || 0);
+                        document.getElementById(detail.id)?.classList.add('completed');
+                    }
+                },
+                handleFlashcardView(detail) {
+                    // Poin hanya ditambah sekali per kartu unik
+                    // Counter viewedFlashcardsCount sudah diurus di pageData
+                    // Cek apakah index ini sudah pernah dapat poin (meski viewedCards di flashcardData)
+                    // Untuk simplifikasi, kita percaya event hanya dikirim sekali per kartu unik
+                    this.viewedFlashcardsCount++; // Tetap increment counter global
+                    this.addPoints(this.pointStructure.flashcard || 0);
+                },
+                handleAllFlashcardsViewed() {
+                    console.log("All flashcards viewed event received.");
+                    this.allFlashcardsViewed = true;
+                    this.checkBadges();
+                },
+                // --- Logika Pengecekan Badge ---
+                checkBadges() {
+                    console.log("Checking badges...");
+                    this.badges.forEach(badge => {
+                        if (!this.earnedBadges.includes(badge.id)) {
+                            let earned = false;
+                            switch (badge.id) {
+                                case 'newbie':
+                                    earned = this.completedQuizzes.length >= 1;
+                                    break;
+                                case 'explorer':
+                                    earned = this.completedAccordions.length >= 2;
+                                    break;
+                                case 'thinker': // Kuis ke-2 adalah quiz2 (B/S)
+                                    earned = this.completedQuizzes.includes('quiz2');
+                                    break;
+                                case 'cardmaster':
+                                    earned = this.allFlashcardsViewed;
+                                    break;
+                                case 'sociologist':
+                                    earned = this.completedAccordions.length >= this.pointStructure.totalAccordions;
+                                    break;
+                                case 'quizwhiz':
+                                    const allQuizIds = ['quiz1', 'quiz2', 'quiz3']; // Definisikan ID kuis
+                                    earned = allQuizIds.every(id => this.completedQuizzes.includes(id));
+                                    break;
+                            }
+                            if (earned) {
+                                console.log(`Badge earned: ${badge.name}`);
+                                this.earnedBadges.push(badge.id);
+                                window.dispatchEvent(new CustomEvent('badge-earned', { detail: { id: badge.id, name: badge.name } }));
+                            }
+                        }
+                    });
+                    console.log("Earned badges:", this.earnedBadges);
+                },
+                // --- Fungsi Notifikasi ---
+                showBadgeNotification(badgeName) {
+                    this.lastBadgeEarned = badgeName;
+                    this.showNotification = true;
+                    clearTimeout(this.notificationTimeout);
+                    this.notificationTimeout = setTimeout(() => {
+                        this.showNotification = false;
+                    }, 6000); // 6 detik
+                },
+                // --- Cek Reward Poin ---
+                checkPointsReward() {
+                    if (this.totalPoints >= this.pointsRewardThreshold && !this.showPointsReward) {
+                        console.log("Points reward threshold reached!");
+                        this.showPointsReward = true;
+                    }
+                }
+            }
+        }
+        // --- Fungsi Data untuk Accordion ---
+        function accordionData() {
+            return {
+                openAccordion: null,
+                toggleAccordion(id) {
+                    const previouslyOpenId = this.openAccordion;
+                    if (this.openAccordion === id) {
+                        this.openAccordion = null;
+                        this.markCompleted(id);
+                    } else {
+                        if (previouslyOpenId) {
+                           this.markCompleted(previouslyOpenId);
+                        }
+                        this.openAccordion = id;
+                    }
+                },
+                markCompleted(id) {
+                    const globalState = Alpine.$data(document.body);
+                    // Pastikan globalState ada dan accordion belum selesai
+                    if (id && globalState && !globalState.completedAccordions.includes(id)) {
+                         window.dispatchEvent(new CustomEvent('accordion-completed', { detail: { id: id } }));
+                    }
+                }
+            }
+        }
+        // --- Fungsi Data untuk Kuis ---
+        function quiz(config) {
+            return {
+                id: config.id,
+                question: config.question,
+                options: config.options,
+                correctAnswer: config.correctAnswer,
+                points: config.points, // Ambil dari config
+                hint: config.hint || '',
+                selectedAnswer: null,
+                submitted: false,
+                isCorrect: false,
+                feedbackText: '',
+                submitAnswer() {
+                    if (this.selectedAnswer === null) {
+                        this.feedbackText = ' Pilih salah satu jawaban dulu ya!';
+                        this.isCorrect = false;
+                        this.submitted = true;
+                        return;
+                    }
+                    this.submitted = true;
+                    this.isCorrect = this.selectedAnswer === this.correctAnswer;
+                    if (this.isCorrect) {
+                        this.feedbackText = ` Kamu dapat ${this.points} poin!`;
+                    } else {
+                        this.feedbackText = ` Jawaban yang benar adalah: "${this.correctAnswer}".`;
+                    }
+                    window.dispatchEvent(new CustomEvent('quiz-completed', {
+                        detail: {
+                            id: this.id,
+                            correct: this.isCorrect,
+                            points: this.isCorrect ? this.points : 0
+                        }
+                    }));
+                }
+            }
+        }
+         // --- Fungsi Data untuk Flashcard ---
+        function flashcardData() {
+            return {
+                currentIndex: 0,
+                cardFlipped: false,
+                viewedCards: [], // Index kartu yang sudah dilihat di sesi ini
+                cards: [ // Data kartu tetap sama
+                    { term: "Sosiologi", definition: "Studi ilmiah tentang masyarakat, perilaku sosial, dan interaksi manusia." },
+                    { term: "Struktur Sosial", definition: "Pola hubungan sosial yang relatif stabil dalam masyarakat." },
+                    { term: "Institusi Sosial", definition: "Sistem norma dan peran terorganisir untuk memenuhi kebutuhan masyarakat." },
+                    { term: "Teori Konflik", definition: "Perspektif yang melihat masyarakat sebagai arena ketidaksetaraan dan perebutan sumber daya." },
+                    { term: "Imajinasi Sosiologis", definition: "Kemampuan menghubungkan masalah pribadi dengan isu sosial yang lebih luas." },
+                    { term: "Norma Sosial", definition: "Aturan atau harapan perilaku dalam situasi tertentu." },
+                    { term: "Nilai Sosial", definition: "Gagasan tentang apa yang dianggap baik, benar, dan penting dalam suatu masyarakat." }
+                ],
+                init() {
+                    // Set jumlah kartu di state global jika perlu (tapi sudah pakai pointStructure)
+                    // Alpine.$data(document.body).pointStructure.totalFlashcards = this.cards.length;
+                    // Alpine.$data(document.body).calculateMaxPoints(); // Hitung ulang max points
+                },
+                get currentCard() {
+                    return this.cards && this.cards.length > 0 ? this.cards[this.currentIndex] : { term: '', definition: '' };
+                },
+                flipCard() {
+                    this.cardFlipped = !this.cardFlipped;
+                    // Kirim event HANYA jika kartu dibalik ke sisi definisi
+                    // dan BELUM pernah ada di viewedCards di SESI INI
+                    if (this.cardFlipped && !this.viewedCards.includes(this.currentIndex)) {
+                         this.viewedCards.push(this.currentIndex);
+                         console.log(`Flashcard viewed: ${this.currentIndex}. Total viewed this session: ${this.viewedCards.length}`);
+                         // Kirim event untuk menambah poin (poin didapat dari global state)
+                         window.dispatchEvent(new CustomEvent('flashcard-viewed', { detail: { index: this.currentIndex } }));
+                         // Cek apakah semua kartu sudah dilihat (menggunakan data global)
+                         const globalState = Alpine.$data(document.body);
+                         if (globalState && globalState.viewedFlashcardsCount >= globalState.pointStructure.totalFlashcards && !globalState.allFlashcardsViewed) {
+                             console.log("Dispatching all-flashcards-viewed event.");
+                             window.dispatchEvent(new CustomEvent('all-flashcards-viewed'));
+                         }
+                    }
+                },
+                nextCard() {
+                    if (this.currentIndex < this.cards.length - 1) {
+                        this.currentIndex++;
+                        this.cardFlipped = false;
+                    }
+                },
+                prevCard() {
+                    if (this.currentIndex > 0) {
+                        this.currentIndex--;
+                         this.cardFlipped = false;
+                    }
+                },
+                shuffleCards() {
+                    console.log("Shuffling cards...");
+                    for (let i = this.cards.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
+                    }
+                    this.currentIndex = 0;
+                    this.cardFlipped = false;
+                    // Reset viewedCards sesi ini agar bisa dilihat ulang dalam urutan baru
+                    this.viewedCards = [];
+                    console.log("Cards shuffled. Current index reset to 0. Viewed cards for this session reset.");
+                }
+            }
+        }
+        // --- Event Listener Global ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentYearElement = document.getElementById('current-year');
+            if (currentYearElement) {
+                currentYearElement.textContent = new Date().getFullYear();
+            }
+        });
+    </script>
+</body>
+</html>
