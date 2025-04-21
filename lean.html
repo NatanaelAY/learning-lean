@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengantar Lean: Bekerja Lebih Cerdas, Bukan Lebih Keras (v2)</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS Umum (Tidak ada perubahan signifikan dari v1) --- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            padding-top: 68px;
+            background-color: #f0f9ff;
+            color: #3f3f46;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23bae6fd' fill-opacity='0.1'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 1.4l2.83 2.83 1.41-1.41L1.41 0H0v1.41zM38.59 40l-2.83-2.83 1.41-1.41L40 38.59V40h-1.41zM40 1.41l-2.83 2.83-1.41-1.41L38.59 0H40v1.41zM20 18.6l2.83-2.83 1.41 1.41L21.41 20l2.83 2.83-1.41 1.41L20 21.41l-2.83 2.83-1.41-1.41L18.59 20l-2.83-2.83 1.41-1.41L20 18.59z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .hero-icon { width: 1.25rem; height: 1.25rem; display: inline-block; vertical-align: middle; margin-right: 0.5rem; }
+        .interactive-box { margin-top: 1.25rem; padding: 1rem 1.25rem; border-left-width: 4px; border-radius: 0.5rem; background-color: #f0fdf4; border-color: #4ade80; box-shadow: 0 2px 5px rgba(74, 222, 128, 0.1); }
+        .interactive-box h5 { font-weight: 600; color: #16a34a; margin-bottom: 0.5rem; display: flex; align-items: center; }
+        .interactive-box p, .interactive-box ul { color: #15803d; font-size: 0.95em; }
+        .real-example-box { margin-top: 1.25rem; padding: 1rem 1.25rem; border-left-width: 4px; border-radius: 0.5rem; background-color: #fef3c7; border-color: #fcd34d; box-shadow: 0 2px 5px rgba(252, 211, 77, 0.15); }
+        .real-example-box h5 { font-weight: 600; color: #b45309; margin-bottom: 0.5rem; display: flex; align-items: center; }
+        .real-example-box p, .real-example-box ul { color: #92400e; font-size: 0.95em; }
+        .reflection-textarea { width: 100%; border: 1px dashed #a7f3d0; border-radius: 0.375rem; padding: 0.5rem 0.75rem; margin-top: 0.75rem; font-size: 0.9em; color: #14532d; background-color: #dcfce7; min-height: 60px; resize: vertical; box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); }
+        .reflection-textarea::placeholder { color: #166534; opacity: 0.7; }
+        .simple-button { display: inline-block; padding: 0.6rem 1.2rem; background-image: linear-gradient(to right, #38bdf8, #22d3ee); color: white; border-radius: 9999px; font-size: 0.9rem; font-weight: 600; transition: all 0.3s ease; cursor: pointer; border: none; box-shadow: 0 4px 8px rgba(56, 189, 248, 0.25); }
+        .simple-button:hover:not(:disabled) { background-image: linear-gradient(to right, #0ea5e9, #06b6d4); transform: translateY(-2px) scale(1.05); box-shadow: 0 6px 12px rgba(14, 165, 233, 0.35); }
+        .simple-button:active:not(:disabled) { transform: translateY(0px) scale(1.02); box-shadow: 0 3px 6px rgba(14, 165, 233, 0.3); }
+        .simple-button:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; background-image: linear-gradient(to right, #9ca3af, #a1a1aa); }
+        .submit-reflection-button { margin-top: 0.75rem; }
+        .submission-feedback { font-size: 0.85rem; font-weight: 500; margin-top: 0.5rem; }
+        .quiz-option { margin-bottom: 0.5rem; }
+        .quiz-option label { cursor: pointer; display: block; padding: 0.25rem 0; }
+        .quiz-feedback { margin-top: 0.75rem; font-size: 0.9em; padding: 0.5rem 0.75rem; border-radius: 0.375rem;}
+        .correct { color: #065f46; background-color: #d1fae5; border: 1px solid #6ee7b7; }
+        .incorrect { color: #991b1b; background-color: #fee2e2; border: 1px solid #fca5a5; }
+        .quiz-feedback strong { font-weight: 600; }
+        .quiz-feedback .hint { display: block; margin-top: 0.35rem; font-style: italic; font-size: 0.9em; opacity: 0.9; }
+        i, em { font-style: italic; }
+        main h4 { margin-top: 1.5rem; margin-bottom: 0.75rem; font-weight: 600; color: #0ea5e9; }
+        main h4:first-of-type { margin-top: 0.5rem; }
+        .lead { font-size: 1.05em; color: #52525b; margin-bottom: 1.25rem; line-height: 1.6; }
+        .prose-custom { color: #52525b; }
+        .prose-custom ul > li::marker { color: #38bdf8; }
+        .prose-custom ol > li::marker { color: #38bdf8; }
+        .prose-custom a { color: #0ea5e9; text-decoration: none; font-weight: 500; transition: color 0.2s ease, text-decoration 0.2s ease; }
+        .prose-custom a:hover { color: #0284c7; text-decoration: underline; }
+        .prose-custom strong { color: #18181b; }
+        .sticky-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; transition: all 0.3s ease; background-image: linear-gradient(to right, #38bdf8, #67e8f9); color: #1f2937; }
+        body.scrolled .sticky-nav { box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); background-image: linear-gradient(to right, #0ea5e9, #22d3ee); color: white; }
+        .sticky-nav a { transition: color 0.2s ease, transform 0.2s ease; color: #374151; padding: 0.25rem 0; position: relative; }
+        .sticky-nav a::after { content: ''; position: absolute; width: 0; height: 2px; display: block; margin-top: 2px; right: 0; background: #0369a1; transition: width 0.3s ease; }
+        body.scrolled .sticky-nav a::after { background: white; }
+        .sticky-nav a:hover::after { width: 100%; left: 0; }
+        .sticky-nav a:hover { color: #0369a1; transform: translateY(-1px); }
+        body.scrolled .sticky-nav a { color: white; }
+        body.scrolled .sticky-nav a:hover { color: #e0f2fe; }
+        .flashcard-container { perspective: 1000px; }
+        .flashcard { width: 100%; height: 160px; position: relative; transform-style: preserve-3d; transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border-radius: 0.75rem; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .flashcard.is-flipped { transform: rotateY(180deg); }
+        .flashcard-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 0.75rem; display: flex; justify-content: center; align-items: center; padding: 1.25rem; text-align: center; font-size: 1.1rem; border: 1px solid rgba(0,0,0,0.05); }
+        .flashcard-front { background: linear-gradient(135deg, #a5f3fc, #cffafe); color: #164e63; font-weight: 600; }
+        .flashcard-back { background: linear-gradient(135deg, #d9f99d, #f0fdf4); color: #3f6212; transform: rotateY(180deg); font-size: 0.95rem; }
+        .flashcard-nav-button { background-color: #f8fafc; color: #64748b; border: 1px solid #e2e8f0; padding: 0.5rem 1rem; border-radius: 9999px; transition: all 0.2s ease; font-weight: 500; display: inline-flex; align-items: center; gap: 0.3rem; }
+        .flashcard-nav-button:hover:not(:disabled) { background-color: #e2e8f0; color: #1e293b; transform: translateY(-1px); box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
+        .flashcard-nav-button:disabled { opacity: 0.5; cursor: not-allowed; }
+        .flashcard-nav-button svg { width: 1rem; height: 1rem; }
+        .shuffle-button { background-color: #fef9c3; color: #713f12; border: 1px solid #fde68a; }
+        .shuffle-button:hover:not(:disabled) { background-color: #fde68a; color: #451a03; }
+        footer { background-color: #e0f2fe; color: #38bdf8; border-top: 1px solid #bae6fd; padding-top: 1.5rem; padding-bottom: 1.5rem; margin-bottom: 20px; }
+        footer span.font-semibold { color: #0ea5e9; }
+        footer p.text-xs { color: #7dd3fc; }
+        .accordion-item { background-color: white; border-radius: 0.75rem; margin-bottom: 1rem; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07); border: 1px solid #e0f2fe; overflow: hidden; transition: box-shadow 0.3s ease; }
+        .accordion-item:hover { box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1); }
+        .accordion-header { padding: 1rem 1.5rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid transparent; transition: background-color 0.3s ease, border-color 0.3s ease; }
+        .accordion-header:hover { background-color: #f0f9ff; }
+        #tahap1 .accordion-header:hover { background-color: #ecfeff; }
+        #tahap2 .accordion-header:hover { background-color: #fef9c3; }
+        #tahap3 .accordion-header:hover { background-color: #f0fdf4; }
+        #tahap4 .accordion-header:hover { background-color: #f1f5f9; }
+        .accordion-header h3 { margin: 0; font-size: 1.25rem; font-weight: 600; display: flex; align-items: center; transition: color 0.3s ease; }
+        #tahap1 .accordion-header { background-color: #cffafe1a; }
+        #tahap2 .accordion-header { background-color: #fef9c31a; }
+        #tahap3 .accordion-header { background-color: #dcfce71a; }
+        #tahap4 .accordion-header { background-color: #f8fafc1a; }
+        #tahap1 .accordion-header h3 { color: #0891b2; }
+        #tahap2 .accordion-header h3 { color: #ca8a04; }
+        #tahap3 .accordion-header h3 { color: #16a34a; }
+        #tahap4 .accordion-header h3 { color: #475569; }
+        .accordion-content { padding: 0 1.5rem; max-height: 0; overflow: hidden; transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), padding 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+        .accordion-content-inner { padding: 1.5rem 0; opacity: 0; transition: opacity 0.4s ease-out 0.2s; }
+        .accordion-item.open .accordion-content-inner { opacity: 1; }
+        .accordion-item.open .accordion-header { border-bottom-color: #e0f2fe; }
+        #tahap1.open .accordion-header { background-color: #a5f3fc; }
+        #tahap2.open .accordion-header { background-color: #fde68a; }
+        #tahap3.open .accordion-header { background-color: #bbf7d0; }
+        #tahap4.open .accordion-header { background-color: #e2e8f0; }
+        #tahap1.open .accordion-header h3 { color: #164e63; }
+        #tahap2.open .accordion-header h3 { color: #78350f; }
+        #tahap3.open .accordion-header h3 { color: #14532d; }
+        #tahap4.open .accordion-header h3 { color: #1e293b; }
+        .accordion-icon { transition: transform 0.4s ease; width: 1.5rem; height: 1.5rem; }
+        .progress-bar-container { background-color: #e0f2fe; border-radius: 9999px; overflow: hidden; height: 12px; margin-bottom: 0.5rem; border: 1px solid #bae6fd; box-shadow: inset 0 1px 2px rgba(0,0,0,0.1); }
+        .progress-bar { background-image: linear-gradient(to right, #67e8f9, #22d3ee); height: 100%; width: 0%; transition: width 0.6s ease-out; border-radius: 9999px; }
+        .gamification-stats { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding: 0.75rem 1.5rem; background-color: #f0f9ff; border: 1px dashed #7dd3fc; border-radius: 0.75rem; }
+        .gamification-stats > div { margin-bottom: 0.5rem; }
+        .gamification-stats span { font-weight: 600; color: #0ea5e9; }
+        .points-display { font-size: 1.1rem; transition: transform 0.2s ease-out; display: inline-block; }
+        .points-display.pop { transform: scale(1.2); }
+        .progress-text { font-size: 0.9rem; color: #0369a1; }
+        .completion-badge { display: inline-block; margin-left: 0.5rem; color: #10b981; opacity: 0; transition: opacity 0.3s ease; font-weight: bold; }
+        .accordion-item.completed .completion-badge { opacity: 1; }
+        .points-reward-message { text-align: center; padding: 0.75rem; margin-bottom: 1rem; background-color: #dcfce7; color: #166534; border: 1px solid #86efac; border-radius: 0.5rem; font-weight: 500; font-size: 0.9rem; box-shadow: 0 2px 5px rgba(74, 222, 128, 0.15); }
+        .badges-container { margin-bottom: 2rem; padding: 1rem 1.5rem; background-color: #f0f9ff; border: 1px dashed #a5f3fc; border-radius: 0.75rem; position: relative; }
+        .badges-container h4 { margin-top: 0; margin-bottom: 1rem; font-weight: 600; color: #0ea5e9; text-align: center; font-size: 1.1rem; }
+        .badges-grid { display: flex; flex-wrap: wrap; gap: 1.25rem; justify-content: center; }
+        .badge { display: flex; flex-direction: column; align-items: center; text-align: center; width: 85px; opacity: 0.35; transition: opacity 0.4s ease, transform 0.3s ease; position: relative; }
+        .badge.earned { opacity: 1; transform: scale(1.08); }
+        .badge-icon { font-size: 2.8rem; line-height: 1; margin-bottom: 0.35rem; filter: grayscale(90%); transition: filter 0.4s ease; }
+        .badge.earned .badge-icon { filter: none; }
+        .badge-name { font-size: 0.75rem; font-weight: 500; color: #94a3b8; line-height: 1.2; }
+        .badge.earned .badge-name { color: #0ea5e9; font-weight: 600; }
+        .badge .tooltip { visibility: hidden; width: 180px; background-color: #374151; color: #fff; text-align: center; border-radius: 6px; padding: 8px 12px; position: absolute; z-index: 10; bottom: 125%; left: 50%; margin-left: -90px; opacity: 0; transition: opacity 0.3s; font-size: 0.75rem; pointer-events: none; white-space: normal; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .badge .tooltip::after { content: ""; position: absolute; top: 100%; left: 50%; margin-left: -5px; border-width: 5px; border-style: solid; border-color: #374151 transparent transparent transparent; }
+        .badge:hover .tooltip { visibility: visible; opacity: 1; }
+        .tooltip-criteria { display: block; font-size: 0.7rem; color: #d1d5db; margin-top: 4px; font-style: italic; }
+        .tooltip-objective { display: block; font-size: 0.7rem; color: #a5f3fc; margin-top: 4px; font-weight: 500; }
+        .badge-notification { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(120%); background-color: #10b981; color: white; padding: 0.8rem 1.6rem; border-radius: 8px; font-size: 0.95rem; font-weight: 600; box-shadow: 0 5px 15px rgba(0,0,0,0.2); opacity: 0; transition: opacity 0.4s ease-out, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); white-space: nowrap; z-index: 100; }
+        .badge-notification.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .watermark { position: fixed; bottom: 5px; right: 10px; font-size: 0.7rem; color: #94a3b8; opacity: 0.6; z-index: 40; pointer-events: none; }
+        .inquiry-box { margin-bottom: 1.5rem; padding: 1rem 1.25rem; border-left-width: 4px; border-radius: 0.5rem; background-color: #fefce8; border-color: #facc15; box-shadow: 0 2px 5px rgba(250, 204, 21, 0.1); }
+        .inquiry-box h5 { font-weight: 600; color: #a16207; margin-bottom: 0.5rem; display: flex; align-items: center; }
+        .inquiry-box p { color: #854d0e; font-size: 0.95em; }
+        .analysis-box { margin-top: 1.25rem; padding: 1rem 1.25rem; border-left-width: 4px; border-radius: 0.5rem; background-color: #f0fdf4; border-color: #4ade80; box-shadow: 0 2px 5px rgba(74, 222, 128, 0.1); }
+        .analysis-box h5 { font-weight: 600; color: #16a34a; margin-bottom: 0.5rem; display: flex; align-items: center; }
+        .analysis-box p, .analysis-box ul { color: #15803d; font-size: 0.95em; }
+        .analysis-textarea { width: 100%; border: 1px dashed #86efac; border-radius: 0.375rem; padding: 0.5rem 0.75rem; margin-top: 0.75rem; font-size: 0.9em; color: #14532d; background-color: #f0fdf4; min-height: 60px; resize: vertical; box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); }
+        .analysis-textarea::placeholder { color: #166534; opacity: 0.7; }
+        .section-divider {
+            border: 0;
+            height: 1px;
+            background-image: linear-gradient(to right, rgba(14, 165, 233, 0), rgba(14, 165, 233, 0.5), rgba(14, 165, 233, 0));
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+        }
+    </style>
+</head>
+<body class="bg-sky-50"
+      x-data="pageData()"
+      @quiz-completed.window="handleQuizCompletion($event.detail)"
+      @accordion-completed.window="handleAccordionCompletion($event.detail)"
+      @flashcard-viewed.window="handleFlashcardView($event.detail)"
+      @all-flashcards-viewed.window="handleAllFlashcardsViewed()"
+      @update-progress.window="updateProgress()"
+      @badge-earned.window="showBadgeNotification($event.detail.name)"
+      >
+    <header class="sticky-nav shadow-md" @scroll.window="document.body.classList.toggle('scrolled', window.scrollY > 50)">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+             <div class="flex items-center space-x-2">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-600 transition-colors duration-300" :class="{'text-white': document.body.classList.contains('scrolled')}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /> </svg>
+                 <span class="text-xl font-bold tracking-wide">LEAN 101</span>
+            </div>
+            <nav class="hidden md:flex space-x-7">
+                <a href="#pengantar-lean" class="text-sm font-medium">Pengantar</a>
+                <a href="#tujuan-lean" class="text-sm font-medium">Tujuan</a>
+                <a href="#materi-lean" class="text-sm font-medium">Materi</a>
+                <a href="#flashcards-lean" class="text-sm font-medium">Flashcard</a>
+                <a href="#penutup-lean" class="text-sm font-medium">Penutup</a>
+            </nav>
+            <div class="md:hidden">
+                <button @click="navOpen = !navOpen" class="focus:outline-none p-1 rounded transition duration-200" :class="{'text-white': document.body.classList.contains('scrolled'), 'text-gray-700': !document.body.classList.contains('scrolled') }" aria-label="Toggle Menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" x-show="!navOpen"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" x-show="navOpen" style="display: none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+        </div>
+        <div x-show="navOpen" @click.away="navOpen = false" class="md:hidden bg-white border-t border-sky-200 shadow-lg" x-transition style="display: none;">
+            <nav class="flex flex-col px-4 py-4 space-y-2">
+                <a href="#pengantar-lean" @click="navOpen = false" class="block py-2 px-3 rounded hover:bg-sky-100 text-gray-700 transition duration-200">Pengantar</a>
+                <a href="#tujuan-lean" @click="navOpen = false" class="block py-2 px-3 rounded hover:bg-sky-100 text-gray-700 transition duration-200">Tujuan Belajar</a>
+                <a href="#materi-lean" @click="navOpen = false" class="block py-2 px-3 rounded hover:bg-sky-100 text-gray-700 transition duration-200">Materi Belajar</a>
+                <a href="#flashcards-lean" @click="navOpen = false" class="block py-2 px-3 rounded hover:bg-sky-100 text-gray-700 transition duration-200">Flashcard</a>
+                <a href="#penutup-lean" @click="navOpen = false" class="block py-2 px-3 rounded hover:bg-sky-100 text-gray-700 transition duration-200">Penutup</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+        <section id="pengantar-lean" class="mb-12 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-sky-600 mb-4">Pengantar Lean: Bekerja Lebih Cerdas, Bukan Lebih Keras</h1>
+            <p class="lead max-w-3xl mx-auto">
+                Selamat datang di Lean 101! Pernah merasa pekerjaan Anda banyak hambatan, membuang waktu, atau hasilnya kurang maksimal? Lean hadir sebagai solusi! Ini adalah cara berpikir dan bekerja untuk membuat proses kerja kita lebih efisien, mengurangi pemborosan, dan fokus pada hal yang benar-benar penting (memberi nilai). Modul ini akan membantu Anda memahami dasar-dasar Lean dan bagaimana menerapkannya di pekerjaan sehari-hari. Siap bekerja lebih cerdas? Mari kita mulai!
+            </p>
+            <button class="simple-button" onclick="document.getElementById('tujuan-lean').scrollIntoView()">
+                Mulai Belajar Lean!
+                <svg xmlns="http://www.w3.org/2000/svg" class="hero-icon inline-block ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg> </button>
+        </section>
+
+        <hr class="section-divider">
+
+        <section id="tujuan-lean" class="mb-12">
+             <h2 class="text-2xl font-semibold text-sky-600 mb-4 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="hero-icon mr-2 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                Tujuan Pembelajaran Lean
+            </h2>
+            <div class="prose prose-custom max-w-none mb-6">
+                <p>Setelah menyelesaikan modul ini, Anda sebagai karyawan diharapkan dapat:</p>
+                <ol>
+                    <li>(TP1) Menjelaskan apa itu Lean dan mengapa penting untuk pekerjaan Anda dan perusahaan.</li>
+                    <li>(TP2) Mengenali 7 jenis pemborosan (Muda) yang umum terjadi di berbagai lingkungan kerja.</li>
+                    <li>(TP3) Memahami 5 prinsip inti Lean (Value, Value Stream, Flow, Pull, Perfection).</li>
+                    <li>(TP4) Mengenal beberapa alat Lean dasar (seperti 5S dan Kaizen) dan potensi penerapannya di area kerja Anda.</li>
+                    <li>(TP5) Memulai identifikasi pemborosan sederhana dalam aktivitas kerja sehari-hari.</li>
+                </ol>
+            </div>
+             <div class="interactive-box" x-data="{ submitted: false }">
+                <h5>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="hero-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 15.875c1.248-1.33 1.87-2.903 1.87-4.597 0-1.7-.623-3.268-1.87-4.598m8.75 9.196c-1.248 1.33-1.87 2.903-1.87 4.597 0 1.7.623 3.268 1.87 4.598M12 21a9 9 0 100-18 9 9 0 000 18z" /></svg>
+                    Refleksi Awal: Pemborosan dalam Pekerjaan Kita
+                </h5>
+                <p>Coba ingat-ingat pekerjaan Anda sehari-hari. Pernahkah Anda merasa melakukan langkah yang sebenarnya tidak perlu? Atau menunggu sesuatu (informasi, alat, persetujuan) terlalu lama? Atau harus mengulang pekerjaan karena ada kesalahan? Ceritakan satu contoh "pemborosan" yang pernah Anda alami atau lihat di tempat kerja.</p>
+                <textarea class="reflection-textarea" placeholder="Contoh: Mencari file di komputer terlalu lama, bolak-balik ambil dokumen, menunggu approval email, memperbaiki laporan yang salah ketik..." :disabled="submitted"></textarea>
+                <button class="simple-button submit-reflection-button" @click="submitted = true" :disabled="submitted">Kirim Jawaban</button>
+                <p x-show="submitted" x-transition class="submission-feedback text-green-600">✅ Terima kasih atas observasi Anda! Mengenali pemborosan adalah langkah pertama menuju perbaikan.</p>
+            </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <section id="gamification" class="mb-12">
+            <h2 class="text-2xl font-semibold text-sky-600 mb-6 text-center">Progres Belajar Lean Kamu!</h2>
+            <div class="points-reward-message" x-show="showPointsReward" x-transition>
+                  🎉   Selamat! Kamu telah mencapai <span x-text="pointsRewardThreshold"></span> poin! Terus optimalkan proses!   🎉
+            </div>
+            <div class="gamification-stats mb-6">
+                <div class="text-center">
+                    <div class="points-display">Poin: <span id="pointsValue" x-text="totalPoints">0</span></div>
+                    <div class="progress-text">Total Poin Maksimal: <span x-text="maxPoints"></span></div>
+                </div>
+                <div class="w-full md:w-1/2">
+                     <div class="progress-text text-right mb-1" x-text="`${maxPoints > 0 ? Math.round((totalPoints / maxPoints) * 100) : 0}% Selesai`">0% Selesai</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" :style="`width: ${maxPoints > 0 ? (totalPoints / maxPoints) * 100 : 0}%`"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="badges-container relative">
+                <h4>  🏆   Koleksi Badge Lean Kamu   🏆  </h4>
+                <div class="badges-grid">
+                    <template x-for="badge in badges" :key="badge.id">
+                        <div class="badge" :class="{ 'earned': earnedBadges.includes(badge.id) }">
+                            <span class="badge-icon" x-text="badge.icon"></span>
+                            <span class="badge-name" x-text="badge.name"></span>
+                            <div class="tooltip">
+                                <strong x-text="badge.name"></strong><br>
+                                <span x-text="badge.description"></span>
+                                <span class="tooltip-criteria" x-text="`Cara dapat: ${badge.criteria}`"></span>
+                                <span class="tooltip-objective" x-show="badge.objective" x-text="`Terkait TP: ${badge.objective}`"></span>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                 <div class="badge-notification" x-show="showNotification" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 transform translate-x-[-50%] translateY-[120%]" x-transition:enter-end="opacity-100 transform translate-x-[-50%] translateY-0" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100 transform translate-x-[-50%] translateY-0" x-transition:leave-end="opacity-0 transform translate-x-[-50%] translateY-[120%]" @click="showNotification = false">
+                      ✨   Badge Baru Didapatkan: <strong x-text="lastBadgeEarned"></strong>!   ✨
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <section id="materi-lean" class="mb-12">
+            <h2 class="text-2xl font-semibold text-sky-600 mb-6">Materi Belajar Lean Interaktif</h2>
+            <div x-data="accordionData()">
+                <div :id="'tahap1'" class="accordion-item" :class="{'open': openAccordion === 'tahap1', 'completed': completedAccordions.includes('tahap1')}">
+                    <div class="accordion-header" @click="toggleAccordion('tahap1')">
+                        <h3>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="hero-icon mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg> Tahap 1: Apa Itu Lean? 5 Prinsip Kunci
+                            <span class="completion-badge">  ✓  </span>
+                        </h3>
+                        <svg x-show="openAccordion !== 'tahap1'" xmlns="http://www.w3.org/2000/svg" class="accordion-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                         <svg x-show="openAccordion === 'tahap1'" xmlns="http://www.w3.org/2000/svg" class="accordion-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display: none;"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
+                    <div class="accordion-content" x-ref="content1" :style="openAccordion === 'tahap1' ? `max-height: ${$refs.content1.scrollHeight}px; padding-top: 1.5rem; padding-bottom: 1.5rem;` : ''">
+                        <div class="accordion-content-inner prose prose-custom max-w-none">
+                            <div class="inquiry-box">
+                                <h5>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="hero-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg> Fokus Utama Lean di Pekerjaan Kita
+                                </h5>
+                                <p>Inti dari Lean adalah <strong>menghilangkan pemborosan (waste/Muda)</strong> dan <strong>memaksimalkan nilai (value)</strong>. Dalam pekerjaan Anda, apa yang dianggap 'nilai' oleh 'pelanggan' Anda (bisa rekan kerja, departemen lain, atau pelanggan eksternal)? Aktivitas apa saja yang Anda lakukan yang mungkin tidak menambah nilai bagi mereka?</p>
+                            </div>
+                            <p><strong>Lean</strong> adalah cara berpikir dan bekerja yang fokus pada peningkatan efisiensi dengan terus menerus mencari dan menghilangkan <strong>pemborosan</strong> (aktivitas yang tidak memberi nilai tambah) dalam setiap proses kerja.</p>
+                            <p>Tujuannya sederhana: melakukan pekerjaan dengan lebih baik, lebih cepat, dan lebih mudah, sehingga menghasilkan output (produk, layanan, informasi) yang berkualitas tinggi dengan sumber daya (waktu, tenaga, bahan) yang minimal.</p>
+                            <blockquote class="border-l-4 border-cyan-300 bg-cyan-50 p-3 rounded-r-lg italic text-cyan-800">
+                                "Lean membantu kita melihat pekerjaan kita dengan kacamata baru, fokus pada apa yang benar-benar penting dan membuang sisanya."
+                            </blockquote>
+                            <h4>5 Prinsip Inti Lean (Berlaku di Semua Pekerjaan!):</h4>
+                             <ol>
+                                <li><strong class="text-cyan-600">Value (Nilai):</strong> Pahami apa yang dianggap bernilai oleh 'pelanggan' Anda (penerima hasil kerja Anda). Fokuskan usaha pada aktivitas yang menciptakan nilai tersebut.</li>
+                                <li><strong class="text-cyan-600">Value Stream (Aliran Nilai):</strong> Petakan semua langkah dalam proses kerja Anda dari awal hingga akhir. Identifikasi langkah mana yang menambah nilai dan mana yang merupakan pemborosan.</li>
+                                <li><strong class="text-cyan-600">Flow (Aliran):</strong> Usahakan agar pekerjaan mengalir lancar dari satu langkah ke langkah berikutnya tanpa hambatan, penundaan, atau interupsi.</li>
+                                <li><strong class="text-cyan-600">Pull (Tarikan):</strong> Lakukan pekerjaan hanya ketika ada permintaan atau kebutuhan dari langkah selanjutnya atau 'pelanggan'. Hindari mengerjakan sesuatu terlalu dini atau menumpuk pekerjaan yang belum dibutuhkan.</li>
+                                <li><strong class="text-cyan-600">Perfection (Kesempurnaan):</strong> Jadikan perbaikan sebagai kebiasaan. Selalu cari cara untuk membuat proses kerja Anda lebih baik, lebih efisien, dan bebas dari pemborosan. Ini adalah perjalanan berkelanjutan!</li>
+                            </ol>
+                            <p>Dengan menerapkan prinsip-prinsip ini, kita semua bisa berkontribusi membuat pekerjaan lebih efektif dan efisien, apapun peran kita di perusahaan.</p>
+                            <div x-data="quiz({
+                                id: 'quiz1', points: 5,
+                                question: 'Prinsip Lean yang berfokus pada melakukan pekerjaan hanya saat dibutuhkan oleh proses berikutnya atau pelanggan disebut?',
+                                options: ['Value (Nilai)', 'Flow (Aliran)', 'Pull (Tarikan)', 'Perfection (Kesempurnaan)'],
+                                correctAnswer: 'Pull (Tarikan)',
+                                hint: 'Prinsip mana yang bertujuan mencegah penumpukan pekerjaan atau produk?',
+                                feedbackCorrect: 'Benar! Sistem Tarik (Pull) memastikan pekerjaan dilakukan sesuai kebutuhan, mengurangi penumpukan dan pemborosan.',
+                                feedbackIncorrect: 'Kurang tepat. Prinsip yang mencegah penumpukan pekerjaan dengan bekerja hanya saat ada permintaan adalah Pull (Tarikan).'
+                            })" class="interactive-box mt-6 border-cyan-400 bg-cyan-50">
+                                <h5 class="text-cyan-600"><svg xmlns="http://www.w3.org/2000/svg" class="hero-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>Kuis Prinsip Lean!</h5>
+                                <p x-text="question" class="font-medium mb-3 text-cyan-700"></p>
+                                <template x-for="(option, index) in options" :key="index"><div class="quiz-option"><label><input type="radio" :name="`quiz-${id}`" :value="option" x-model="selectedAnswer" :disabled="submitted" class="form-radio text-cyan-500 focus:ring-cyan-400"><span class="ml-2 text-cyan-700" x-text="option"></span></label></div></template>
+                                <button @click="submitAnswer()" x-show="!submitted" class="simple-button mt-3 !bg-gradient-to-r !from-cyan-400 !to-sky-400 hover:!from-cyan-500 hover:!to-sky-500">Cek Jawaban</button>
+                                <div x-show="submitted" class="quiz-feedback" :class="isCorrect ? 'correct' : 'incorrect'"><strong x-text="isCorrect ? '  ✨   Jawaban Benar!' : '  🙁   Jawaban Kurang Tepat.'"></strong><span x-text="feedbackText"></span><span x-show="!isCorrect && hint" class="hint" x-text="`Petunjuk: ${hint}`"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div :id="'tahap2'" class="accordion-item" :class="{'open': openAccordion === 'tahap2', 'completed': completedAccordions.includes('tahap2')}">
+                     <div class="accordion-header" @click="toggleAccordion('tahap2')">
+                        <h3>
+                             <svg xmlns="http://www.w3.org/2000/svg" class="hero-icon mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg> Tahap 2: Kenali Musuh! 7 Pemborosan (Muda)
+                            <span class="completion-badge">  ✓  </span>
+                        </h3>
+                         <svg x-show="openAccordion !== 'tahap2'" xmlns="http://www.w3.org/2000/svg" class="accordion-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                         <svg x-show="openAccordion === 'tahap2'" xmlns="http://www.w3.org/2000/svg" class="accordion-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display: none;"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
+                    <div class="accordion-content" x-ref="content2" :style="openAccordion === 'tahap2' ? `max-height: ${$refs.content2.scrollHeight}px; padding-top: 1.5rem; padding-bottom: 1.5rem;` : ''">
+                        <div class="accordion-content-inner prose prose-custom max-w-none">
+                            <p>Langkah penting dalam Lean adalah belajar melihat <strong>Muda</strong> (pemborosan). Ini adalah segala aktivitas yang menyerap sumber daya (waktu, tenaga, uang) tapi tidak menambah nilai bagi pelanggan (internal/eksternal). Ada 7 jenis Muda yang umum:</p>
+                            <ol>
+                                <li><strong>Overproduction (Produksi Berlebih):</strong> Membuat sesuatu (barang, laporan, data) lebih banyak atau lebih cepat dari yang dibutuhkan saat ini.</li>
+                                <li><strong>Waiting (Menunggu):</strong> Waktu henti karena menunggu material, informasi, persetujuan, alat, atau orang lain selesai.</li>
+                                <li><strong>Transportation (Transportasi Tidak Perlu):</strong> Memindahkan barang, dokumen, atau orang secara berlebihan atau tidak perlu.</li>
+                                <li><strong>Over-processing (Proses Berlebih):</strong> Melakukan pekerjaan lebih rumit, lebih detail, atau menggunakan alat/proses yang lebih canggih dari yang sebenarnya diperlukan. Termasuk approval berlapis yang tidak perlu.</li>
+                                <li><strong>Inventory (Inventori Berlebih):</strong> Stok berlebih, baik bahan baku, barang setengah jadi (WIP), barang jadi, maupun tumpukan pekerjaan/email yang belum diproses.</li>
+                                <li><strong>Motion (Gerakan Tidak Perlu):</strong> Gerakan fisik (berjalan, meraih, membungkuk) atau bahkan gerakan di layar komputer (klik berulang) yang tidak efisien dan tidak perlu.</li>
+                                <li><strong>Defects (Cacat/Kesalahan):</strong> Hasil kerja yang salah, kurang, atau tidak sesuai standar, sehingga memerlukan perbaikan (rework) atau dibuang.</li>
+                            </ol>
+                             <p><em>(Pemborosan ke-8 yang sering ditambahkan: Underutilized Talent - tidak memanfaatkan keahlian, ide, dan potensi karyawan sepenuhnya).</em></p>
+                             <p>Mengenali jenis-jenis pemborosan ini di area kerja kita adalah langkah awal untuk menghilangkannya.</p>
+                            <div class="real-example-box">
+                                <h5><svg xmlns="http://www.w3.org/2000/svg" class="hero-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 18.657A8.25 8.25 0 0112 20.25a8.25 8.25 0 01-5.657-1.593m11.314 0A8.225 8.225 0 0012 16.5a8.225 8.225 0 00-5.657 2.157m11.314 0L12 18.75l-5.657 1.593m11.314 0A8.25 8.25 0 0012 3.75a8.25 8.25 0 00-5.657 1.593m11.314 0L12 5.25 6.343 3.657m11.314 0A8.25 8.25 0 0112 20.25a8.25 8.25 0 01-5.657-1.593M12 12a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" /></svg>Studi Kasus: Pemborosan di Pabrik Sepatu (Area Cutting)</h5>
+                                <p>Mari kita lihat contoh di area pemotongan kulit (cutting) di pabrik sepatu:</p>
+                                <ul>
+                                    <li><strong>Motion:</strong> Operator harus berjalan jauh dari meja kerjanya untuk mengambil pola potong (die-cut) yang berbeda-beda karena penyimpanannya tidak teratur.</li>
+                                    <li><strong>Waiting:</strong> Operator sering menunggu kiriman kulit dari gudang yang terlambat, atau menunggu giliran menggunakan mesin press.</li>
+                                    <li><strong>Inventory:</strong> Tumpukan besar kulit hasil potong menumpuk di dekat area cutting, menunggu dipindahkan ke proses selanjutnya (preparation/stitching).</li>
+                                    <li><strong>Defects:</strong> Pisau potong yang tumpul menyebabkan hasil potongan tidak rapi dan sebagian kulit harus dibuang.</li>
+                                    <li><strong>Transportation:</strong> Hasil potongan kulit harus diangkut menggunakan troli ke area stitching yang lokasinya cukup jauh.</li>
+                                </ul>
+                                <p>Contoh ini menunjukkan bagaimana berbagai jenis pemborosan bisa muncul dalam satu area kerja.</p>
+                             </div>
+                            <div class="analysis-box" x-data="{ submitted: false }">
+                                <h5>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="hero-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 15.75l-2.489-2.489m0 0a3.375 3.375 0 10-4.773-4.773 3.375 3.375 0 004.774 4.774zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                    Identifikasi Pemborosan di Sekitar Anda
+                                </h5>
+                                <p>Sekarang, pikirkan kembali area kerja Anda sendiri (bisa di kantor, gudang, lini produksi, dll.). Sebutkan minimal 2 contoh pemborosan (Muda) yang sering Anda lihat atau alami di sana!</p>
+                                <textarea class="analysis-textarea" placeholder="Contoh: Menunggu email balasan terlalu lama, mencari alat tulis/perlengkapan, proses approval yang panjang..." :disabled="submitted"></textarea>
+                                <button class="simple-button submit-reflection-button !bg-gradient-to-r !from-green-400 !to-emerald-400 hover:!from-green-500 hover:!to-emerald-500" @click="submitted = true" :disabled="submitted">Kirim Jawaban</button>
+                                <p x-show="submitted" x-transition class="submission-feedback text-green-600">✅ Bagus! Anda mulai bisa 'melihat' pemborosan di sekitar Anda.</p>
+                            </div>
+                            <div x-data="quiz({
+                                id: 'quiz2', points: 5,
+                                question: 'Seorang karyawan harus berjalan bolak-balik mengambil kertas dari printer yang letaknya jauh dari mejanya. Ini contoh pemborosan jenis apa?',
+                                options: ['Defects (Cacat)', 'Waiting (Menunggu)', 'Inventory (Inventori Berlebih)', 'Motion (Gerakan Tidak Perlu)'],
+                                correctAnswer: 'Motion (Gerakan Tidak Perlu)',
+                                hint: 'Jenis pemborosan ini berkaitan dengan gerakan fisik yang tidak efisien.',
+                                feedbackCorrect: 'Tepat! Berjalan bolak-balik yang tidak perlu adalah pemborosan Gerakan (Motion).',
+                                feedbackIncorrect: 'Kurang tepat. Gerakan fisik karyawan yang tidak perlu seperti berjalan jauh mengambil sesuatu adalah contoh pemborosan Motion (Gerakan).'
+                            })" class="interactive-box mt-6 border-yellow-400 bg-yellow-50"> <h5 class="text-yellow-600"><svg xmlns="http://www.w3.org/2000/svg" class="hero-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>Kuis Identifikasi Muda!</h5>
+                                <p x-text="question" class="font-medium mb-3 text-yellow-700"></p>
+                                <template x-for="(option, index) in options" :key="index"><div class="quiz-option"><label><input type="radio" :name="`quiz-${id}`" :value="option" x-model="selectedAnswer" :disabled="submitted" class="form-radio text-yellow-500 focus:ring-yellow-400"><span class="ml-2 text-yellow-700" x-text="option"></span></label></div></template>
+                                <button @click="submitAnswer()" x-show="!submitted" class="simple-button mt-3 !bg-gradient-to-r !from-yellow-400 !to-amber-400 hover:!from-yellow-500 hover:!to-amber-500">Cek Jawaban</button>
+                                <div x-show="submitted" class="quiz-feedback" :class="isCorrect ? 'correct' : 'incorrect'"><strong x-text="isCorrect ? '  ✨   Jawaban Benar!' : '  🙁   Jawaban Kurang Tepat.'"></strong><span x-text="feedbackText"></span><span x-show="!isCorrect && hint" class="hint" x-text="`Petunjuk: ${hint}`"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                 <div :id="'tahap3'" class="accordion-item" :class="{'open': openAccordion === 'tahap3', 'completed': completedAccordions.includes('tahap3')}">
+                     <div class="accordion-header" @click="toggleAccordion('tahap3')">
+                        <h3>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="hero-icon mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg> Tahap 3: 'Senjata' Lean untuk Perbaikan
+                            <span class="completion-badge">  ✓  </span>
+                        </h3>
+                         <svg x-show="openAccordion !== 'tahap3'" xmlns="http://www.w3.org/2000/svg" class="accordion-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                         <svg x-show="openAccordion === 'tahap3'" xmlns="http://www.w3.org/2000/svg" class="accordion-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display: none;"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
+                    <div class="accordion-content" x-ref="content3" :style="openAccordion === 'tahap3' ? `max-height: ${$refs.content3.scrollHeight}px; padding-top: 1.5rem; padding-bottom: 1.5rem;` : ''">
+                        <div class="accordion-content-inner prose prose-custom max-w-none">
+                             <p>Setelah mengenali pemborosan, kita butuh alat untuk menghilangkannya. Berikut beberapa alat Lean dasar yang sangat berguna dan bisa diterapkan di banyak tempat:</p>
+                            <ul>
+                                <li><strong class="text-green-600">5S (Ringkas, Rapi, Resik, Rawat, Rajin):</strong> Ini adalah fondasi Lean! Metodologi 5 langkah untuk menata tempat kerja (fisik maupun digital!) agar efisien, aman, dan mudah dikelola.
+                                    <ul>
+                                        <li><em>Ringkas (Sort):</em> Singkirkan barang/file yang tidak perlu dari area kerja.</li>
+                                        <li><em>Rapi (Set in Order):</em> Tentukan tempat penyimpanan yang logis untuk setiap barang/file yang diperlukan, beri label jika perlu. "Tempat untuk segalanya, segalanya pada tempatnya."</li>
+                                        <li><em>Resik (Shine):</em> Bersihkan area kerja secara teratur. Kebersihan membantu mendeteksi masalah lebih dini.</li>
+                                        <li><em>Rawat (Standardize):</em> Buat standar atau aturan sederhana untuk menjaga 3S pertama (Ringkas, Rapi, Resik).</li>
+                                        <li><em>Rajin (Sustain):</em> Jadikan 5S sebagai kebiasaan dan budaya kerja melalui disiplin dan audit rutin.</li>
+                                        <li><em>Contoh Kantor:</em> Merapikan meja kerja, menata folder di komputer, membersihkan laci, membuat standar penamaan file.</li>
+                                    </ul>
+                                </li>
+                                <li><strong class="text-green-600">Kaizen (Perbaikan Berkelanjutan):</strong> Ini bukan alat spesifik, tapi filosofi! Artinya melakukan perbaikan-perbaikan kecil secara terus-menerus, melibatkan ide dari semua karyawan. Jangan menunggu solusi besar, mulai dari yang kecil!
+                                    <ul>
+                                        <li><em>Contoh:</em> Mengusulkan cara lebih cepat mengisi formulir, menyarankan tata letak alat yang lebih baik, menemukan cara mengurangi langkah dalam suatu proses.</li>
+                                    </ul>
+                                </li>
+                                <li><strong class="text-green-600">Visual Management (Manajemen Visual):</strong> Menggunakan alat bantu visual (papan tulis, grafik, label warna, tanda lantai) untuk membuat informasi penting, standar, dan status pekerjaan mudah terlihat dan dipahami oleh semua orang.
+                                     <ul>
+                                        <li><em>Contoh:</em> Papan status proyek, label warna untuk status dokumen, tanda batas area penyimpanan.</li>
+                                     </ul>
+                                </li>
+                                <li><strong class="text-green-600">Standardized Work (Kerja Standar):</strong> Mendokumentasikan cara terbaik, teraman, dan paling efisien untuk melakukan suatu tugas berulang. Ini membantu konsistensi, pelatihan, dan identifikasi masalah.
+                                    <ul>
+                                        <li><em>Contoh:</em> Membuat instruksi kerja sederhana (checklist) untuk proses approval, langkah-langkah input data, atau cara menjawab telepon pelanggan.</li>
+                                    </ul>
+                                </li>
+                                </ul>
+                             <p>Memulai dengan 5S dan mendorong budaya Kaizen adalah langkah awal yang bagus untuk menerapkan Lean di area kerja manapun.</p>
+                             <div class="analysis-box mt-6 !border-green-400 !bg-green-50" x-data="{ submitted: false }">
+                                <h5 class="!text-green-600"><svg xmlns="http://www.w3.org/2000/svg" class="hero-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" /></svg>Ide Perbaikan Sederhana (Kaizen)</h5>
+                                <p class="!text-green-700">Pikirkan satu tugas rutin yang sering Anda lakukan. Adakah langkah kecil atau perubahan sederhana yang bisa membuat tugas itu sedikit lebih cepat, lebih mudah, atau mengurangi kemungkinan kesalahan? Ini adalah ide Kaizen!</p>
+                                <textarea class="analysis-textarea !border-green-200 !bg-green-100 !text-green-900 placeholder:!text-green-700" placeholder="Tugas: ... Ide Perbaikan Sederhana: ..." :disabled="submitted"></textarea>
+                                <button class="simple-button submit-reflection-button !bg-gradient-to-r !from-green-400 !to-teal-400 hover:!from-green-500 hover:!to-teal-500" @click="submitted = true" :disabled="submitted">Kirim Jawaban</button>
+                                <p x-show="submitted" x-transition class="submission-feedback text-green-600">✅ Terima kasih atas idenya! Setiap ide kecil sangat berharga dalam Lean.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                 <div :id="'tahap4'" class="accordion-item" :class="{'open': openAccordion === 'tahap4', 'completed': completedAccordions.includes('tahap4')}">
+                     <div class="accordion-header" @click="toggleAccordion('tahap4')">
+                        <h3>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="hero-icon mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg> Tahap 4: Mengapa Lean Penting Bagi Kita?
+                            <span class="completion-badge">  ✓  </span>
+                        </h3>
+                         <svg x-show="openAccordion !== 'tahap4'" xmlns="http://www.w3.org/2000/svg" class="accordion-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                         <svg x-show="openAccordion === 'tahap4'" xmlns="http://www.w3.org/2000/svg" class="accordion-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="display: none;"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
+                    <div class="accordion-content" x-ref="content4" :style="openAccordion === 'tahap4' ? `max-height: ${$refs.content4.scrollHeight}px; padding-top: 1.5rem; padding-bottom: 1.5rem;` : ''">
+                        <div class="accordion-content-inner prose prose-custom max-w-none">
+                            <p>Menerapkan Lean bukan hanya menguntungkan perusahaan, tapi juga kita sebagai karyawan. Namun, tentu ada tantangannya.</p>
+                            <h4>Manfaat Lean Bagi Karyawan & Perusahaan:</h4>
+                            <ul>
+                                <li><strong class="text-slate-600">Pekerjaan Lebih Mudah & Kurang Stres:</strong> Proses yang lebih lancar, area kerja rapi, dan lebih sedikit kesalahan membuat pekerjaan lebih nyaman.</li>
+                                <li><strong class="text-slate-600">Peningkatan Keterampilan:</strong> Belajar mengidentifikasi masalah dan mencari solusi meningkatkan kemampuan problem-solving Anda.</li>
+                                <li><strong class="text-slate-600">Lingkungan Kerja Lebih Aman & Bersih:</strong> 5S secara langsung meningkatkan keselamatan dan kebersihan.</li>
+                                <li><strong class="text-slate-600">Rasa Memiliki & Keterlibatan:</strong> Ide perbaikan (Kaizen) dari karyawan dihargai, meningkatkan rasa kontribusi.</li>
+                                <li><strong class="text-slate-600">Peningkatan Kualitas Hasil Kerja:</strong> Mengurangi cacat/kesalahan berarti hasil kerja kita lebih baik.</li>
+                                <li><strong class="text-slate-600">Efisiensi Perusahaan:</strong> Mengurangi biaya, mempercepat proses, dan meningkatkan kualitas membuat perusahaan lebih kompetitif, yang pada akhirnya baik untuk semua.</li>
+                            </ul>
+                            <h4>Tantangan Umum Penerapan Lean:</h4>
+                            <ul>
+                                <li><strong class="text-slate-600">Resistensi Terhadap Perubahan:</strong> "Kami sudah biasa begini" adalah hambatan umum. Perlu komunikasi dan contoh yang baik dari manajemen.</li>
+                                <li><strong class="text-slate-600">Kurangnya Pemahaman/Pelatihan:</strong> Karyawan perlu paham 'mengapa' dan 'bagaimana' Lean diterapkan.</li>
+                                <li><strong class="text-slate-600">Kurangnya Dukungan Manajemen:</strong> Lean butuh komitmen dari atas ke bawah.</li>
+                                <li><strong class="text-slate-600">Merasa 'Diawasi' atau 'Beban Tambahan':</strong> Awalnya, mencatat atau mengubah kebiasaan bisa terasa merepotkan.</li>
+                                <li><strong class="text-slate-600">Sulit Memulai:</strong> Bingung harus mulai dari mana. Fokus pada pemborosan yang paling terasa atau area kerja sendiri adalah awal yang baik.</li>
+                            </ul>
+                             <p>Kunci sukses Lean adalah komunikasi yang baik, keterlibatan semua orang, dan kemauan untuk mencoba hal baru demi perbaikan bersama.</p>
+                             <div class="analysis-box mt-6 !border-slate-400 !bg-slate-50" x-data="{ submitted: false }">
+                                <h5 class="!text-slate-700"><svg xmlns="http://www.w3.org/2000/svg" class="hero-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 15.535 21 11.4M18 14v4.75A2.25 2.25 0 0 1 15.75 21H3.75A2.25 2.25 0 0 1 1.5 18.75V8.25A2.25 2.25 0 0 1 3.75 6H10" /></svg>Manfaat Lean Bagi Anda</h5>
+                                <p class="!text-slate-800">Dari daftar manfaat Lean di atas, mana satu manfaat yang menurut Anda paling penting atau paling Anda harapkan bisa terwujud di pekerjaan Anda sehari-hari? Jelaskan alasannya!</p>
+                                <textarea class="analysis-textarea !border-slate-200 !bg-slate-100 !text-slate-900 placeholder:!text-slate-700" placeholder="Manfaat paling penting bagi saya adalah... karena..." :disabled="submitted"></textarea>
+                                <button class="simple-button submit-reflection-button !bg-gradient-to-r !from-slate-400 !to-gray-400 hover:!from-slate-500 hover:!to-gray-500" @click="submitted = true" :disabled="submitted">Kirim Jawaban</button>
+                                <p x-show="submitted" x-transition class="submission-feedback text-slate-700">✅ Terima kasih! Memahami manfaat pribadi dapat meningkatkan motivasi menerapkan Lean.</p>
+                            </div>
+                            <div x-data="quiz({
+                                id: 'quiz3', points: 5,
+                                question: 'Manakah yang merupakan CONTOH penerapan prinsip Kaizen (perbaikan berkelanjutan) oleh seorang karyawan?',
+                                options: [
+                                    'Menunggu instruksi lengkap sebelum mulai bekerja.',
+                                    'Mengusulkan cara menata alat tulis agar lebih mudah dijangkau.',
+                                    'Menyimpan semua email masuk tanpa menghapusnya.',
+                                    'Melakukan pekerjaan persis sama seperti tahun lalu tanpa perubahan.'
+                                    ],
+                                correctAnswer: 'Mengusulkan cara menata alat tulis agar lebih mudah dijangkau.',
+                                hint: 'Kaizen adalah tentang ide perbaikan kecil dari karyawan.',
+                                feedbackCorrect: 'Tepat! Mengusulkan perbaikan kecil untuk efisiensi adalah inti dari Kaizen.',
+                                feedbackIncorrect: 'Kurang tepat. Kaizen adalah tentang mencari dan mengusulkan perbaikan, sekecil apapun, secara terus menerus. Menata alat tulis agar lebih mudah dijangkau adalah contohnya.'
+                             })" class="interactive-box mt-6 border-slate-400 bg-slate-50">
+                                <h5 class="text-slate-600"><svg xmlns="http://www.w3.org/2000/svg" class="hero-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.21 11.35A8.25 8.25 0 1111.35 3.79a8.25 8.25 0 017.86 7.56zM12 18a6 6 0 100-12 6 6 0 000 12z" /></svg>Kuis Penerapan Lean!</h5>
+                                <p x-text="question" class="font-medium mb-3 text-slate-700"></p>
+                                <template x-for="(option, index) in options" :key="index"><div class="quiz-option"><label><input type="radio" :name="`quiz-${id}`" :value="option" x-model="selectedAnswer" :disabled="submitted" class="form-radio text-slate-500 focus:ring-slate-400"><span class="ml-2 text-slate-700" x-text="option"></span></label></div></template>
+                                <button @click="submitAnswer()" x-show="!submitted" class="simple-button mt-3 !bg-gradient-to-r !from-slate-400 !to-gray-400 hover:!from-slate-500 hover:!to-gray-500">Cek Jawaban</button>
+                                <div x-show="submitted" class="quiz-feedback" :class="isCorrect ? 'correct' : 'incorrect'"><strong x-text="isCorrect ? '  ✨   Jawaban Benar!' : '  🙁   Jawaban Kurang Tepat.'"></strong><span x-text="feedbackText"></span><span x-show="!isCorrect && hint" class="hint" x-text="`Petunjuk: ${hint}`"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <section id="flashcards-lean" class="mb-12">
+             <h2 class="text-2xl font-semibold text-sky-600 mb-6">Uji Ingatan Istilah Lean!</h2>
+             <div x-data="flashcardData()" class="max-w-lg mx-auto">
+                <div class="flashcard-container mb-4">
+                    <div class="flashcard" :class="{ 'is-flipped': cardFlipped }" @click="flipCard()">
+                        <div class="flashcard-face flashcard-front"><span x-text="currentCard.term"></span></div>
+                        <div class="flashcard-face flashcard-back"><span x-text="currentCard.definition"></span></div>
+                    </div>
+                </div>
+                <div class="flex justify-between items-center mb-3">
+                    <button @click="prevCard()" :disabled="currentIndex === 0" class="flashcard-nav-button"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg>Sebelumnya</button>
+                    <span class="text-sm text-slate-500">Kartu <span x-text="currentIndex + 1"></span> dari <span x-text="cards.length"></span> (<span x-text="viewedCards.length"></span> dilihat)</span>
+                    <button @click="nextCard()" :disabled="currentIndex === cards.length - 1" class="flashcard-nav-button">Berikutnya<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg></button>
+                </div>
+                 <div class="text-center mb-3">
+                     <button @click="shuffleCards()" class="flashcard-nav-button shuffle-button"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l-3-3m3 3-3 3m-12-3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3 3-3" /></svg>Acak Kartu</button>
+                 </div>
+                 <p class="text-xs text-center text-slate-400 mt-3">Klik kartu untuk melihat definisi. Setiap kartu dilihat dapat 1 poin!</p>
+            </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <section id="penutup-lean" class="text-center mt-16 mb-8">
+            <h2 class="text-3xl font-semibold text-sky-600 mb-4">Selamat! Anda Telah Menyelesaikan Pengantar Lean!</h2>
+            <p class="lead max-w-2xl mx-auto">
+                Anda kini memiliki pemahaman dasar tentang Lean, mengapa ini penting, bagaimana mengenali pemborosan di sekitar kita, dan beberapa cara sederhana untuk memulai perbaikan. Ingat, Lean adalah perjalanan! Mulailah dari hal kecil di area kerja Anda sendiri.
+            </p>
+             <div class="interactive-box max-w-xl mx-auto mt-8 !border-emerald-400 !bg-emerald-50" x-data="{ submitted: false }">
+                 <h5 class="!text-emerald-600 justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="hero-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>Refleksi Akhir & Langkah Aksi Kecil</h5>
+                <p class="!text-emerald-700">Setelah mempelajari materi ini, apa <strong>satu langkah kecil</strong> yang bisa Anda coba lakukan minggu ini untuk mulai menerapkan prinsip Lean atau mengurangi pemborosan dalam pekerjaan Anda?</p>
+                 <textarea class="reflection-textarea !border-emerald-200 !bg-emerald-100 !text-emerald-900 placeholder:!text-emerald-700" placeholder="Contoh: Mencoba menata meja kerja (5S), mengamati waktu tunggu dalam satu proses, mencatat ide perbaikan kecil..." :disabled="submitted"></textarea>
+                 <button class="simple-button submit-reflection-button !bg-gradient-to-r !from-emerald-500 !to-teal-500 hover:!from-emerald-600 hover:!to-teal-600" @click="submitted = true" :disabled="submitted">Kirim Jawaban</button>
+                 <p x-show="submitted" x-transition class="submission-feedback text-emerald-600">✅ Luar biasa! Semoga berhasil dengan langkah kecil Anda!</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center py-6">
+        <p class="text-sm">&copy; <span id="current-year"></span> <span class="font-semibold">Belajar Lean</span>. Hak Cipta Dilindungi.</p>
+        <p class="text-xs mt-1">Dibuat dengan <span class="text-red-500">&hearts;</span> untuk pembelajaran yang efisien.</p>
+    </footer>
+    <div class="watermark">Dibuat oleh AI (Direvisi dari Template)</div>
+
+    <script>
+        // --- Alpine.js Logic ---
+        // Fungsi Data Utama Alpine.js
+        function pageData() {
+            return {
+                navOpen: false,
+                totalPoints: 0,
+                pointStructure: {
+                    quiz1: 5, quiz2: 5, quiz3: 5,
+                    flashcard: 1, accordion: 2.5,
+                    totalQuizzes: 3, totalFlashcards: 7, totalAccordions: 4
+                },
+                maxPoints: 0,
+                earnedBadges: [],
+                completedQuizzes: [], completedAccordions: [],
+                viewedFlashcardsCount: 0, allFlashcardsViewed: false,
+                showNotification: false, lastBadgeEarned: '', notificationTimeout: null,
+                showPointsReward: false, pointsRewardThreshold: 20,
+                // [REVISI v2] Badge disesuaikan untuk karyawan umum
+                badges: [
+                     { id: 'lean_starter', name: 'Pemula Lean', icon: '🌱', description: 'Mulai paham dasar Lean!', criteria: 'Selesaikan Kuis pertama', objective: 'TP1' },
+                    { id: 'waste_spotter', name: 'Pemburu Muda', icon: '🗑️', description: 'Bisa mengenali pemborosan!', criteria: 'Selesaikan Tahap 2 (Muda)', objective: 'TP2' },
+                    { id: 'principle_pro', name: 'Paham Prinsip', icon: '🧭', description: 'Menguasai 5 Prinsip Lean.', criteria: 'Selesaikan Kuis ke-1', objective: 'TP3' }, // Kuis 1 tentang Prinsip
+                    { id: 'card_master_lean', name: 'Master Flashcard', icon: '🃏', description: 'Melihat semua flashcard Lean.', criteria: 'Lihat semua Flashcard', objective: 'TP1, TP2, TP3' }, // Flashcard mencakup semua
+                    { id: 'kaizen_starter', name: 'Penggiat Kaizen', icon: '💡', description: 'Mulai berpikir perbaikan!', criteria: 'Selesaikan Kuis ke-3', objective: 'TP4, TP5' }, // Kuis 3 tentang Kaizen/Manfaat
+                    { id: 'lean_finisher', name: 'Penyelesai Lean 101', icon: '🎓', description: 'Menyelesaikan semua materi!', criteria: 'Selesaikan semua Tahap Materi', objective: 'Semua TP' }
+                    // Quiz Champ dihapus/diganti agar lebih fokus ke pemahaman dasar & aksi
+                ],
+                init() { this.calculateMaxPoints(); this.updateProgress(); console.log("Page data initialized (Lean Karyawan v2)."); },
+                calculateMaxPoints() {
+                    let max = 0;
+                    max += (this.pointStructure.quiz1 || 0) + (this.pointStructure.quiz2 || 0) + (this.pointStructure.quiz3 || 0);
+                    max += (this.pointStructure.totalFlashcards || 0) * (this.pointStructure.flashcard || 0);
+                    max += (this.pointStructure.totalAccordions || 0) * (this.pointStructure.accordion || 0);
+                    this.maxPoints = max;
+                },
+                addPoints(amount) {
+                    if (amount <= 0) return;
+                    this.totalPoints = Math.min(this.totalPoints + amount, this.maxPoints);
+                    console.log(`Points added: ${amount}. Total: ${this.totalPoints}`);
+                    const pointsElement = document.getElementById('pointsValue');
+                    if (pointsElement) { pointsElement.parentElement.classList.add('pop'); setTimeout(() => { pointsElement.parentElement.classList.remove('pop'); }, 200); }
+                    this.checkPointsReward(); this.updateProgress(); this.checkBadges();
+                },
+                updateProgress() { console.log("Updating progress display."); },
+                handleQuizCompletion(detail) {
+                     if (!this.completedQuizzes.includes(detail.id)) {
+                        console.log(`Quiz ${detail.id} completed. Correct: ${detail.correct}`);
+                        this.completedQuizzes.push(detail.id);
+                        if (detail.correct) { this.addPoints(this.pointStructure[detail.id] || 0); }
+                        this.checkBadges();
+                    } else { console.log(`Quiz ${detail.id} already completed.`); }
+                },
+                handleAccordionCompletion(detail) {
+                    if (!this.completedAccordions.includes(detail.id)) {
+                        console.log(`Accordion ${detail.id} completed.`);
+                        this.completedAccordions.push(detail.id);
+                        this.addPoints(this.pointStructure.accordion || 0);
+                        document.getElementById(detail.id)?.classList.add('completed');
+                        this.checkBadges();
+                    }
+                },
+                handleFlashcardView(detail) { console.log(`Flashcard view event: ${detail.index}`); },
+                handleAllFlashcardsViewed() { console.log("All flashcards viewed event."); this.allFlashcardsViewed = true; this.checkBadges(); },
+                checkBadges() {
+                    console.log("Checking badges...");
+                    this.badges.forEach(badge => {
+                        if (!this.earnedBadges.includes(badge.id)) {
+                            let earned = false;
+                            // Logika pengecekan badge (disesuaikan dengan ID baru v2)
+                            switch (badge.id) {
+                                case 'lean_starter': earned = this.completedQuizzes.length >= 1; break;
+                                case 'waste_spotter': earned = this.completedAccordions.includes('tahap2'); break;
+                                case 'principle_pro': earned = this.completedQuizzes.includes('quiz1'); break; // Kuis 1 tentang prinsip
+                                case 'card_master_lean': earned = this.allFlashcardsViewed; break;
+                                case 'kaizen_starter': earned = this.completedQuizzes.includes('quiz3'); break; // Kuis 3 tentang Kaizen/Manfaat
+                                case 'lean_finisher': earned = this.completedAccordions.length >= this.pointStructure.totalAccordions; break;
+                            }
+                            if (earned) {
+                                console.log(`Badge earned: ${badge.name}`); this.earnedBadges.push(badge.id);
+                                window.dispatchEvent(new CustomEvent('badge-earned', { detail: { id: badge.id, name: badge.name } }));
+                            }
+                        }
+                    });
+                    console.log("Earned badges:", this.earnedBadges);
+                },
+                showBadgeNotification(badgeName) {
+                    this.lastBadgeEarned = badgeName; this.showNotification = true;
+                    clearTimeout(this.notificationTimeout);
+                    this.notificationTimeout = setTimeout(() => { this.showNotification = false; }, 6000);
+                },
+                checkPointsReward() {
+                    if (this.totalPoints >= this.pointsRewardThreshold && !this.showPointsReward) {
+                        console.log("Points reward threshold reached!"); this.showPointsReward = true;
+                    }
+                }
+            }
+        }
+        // Fungsi Data untuk Accordion (Tidak ada perubahan)
+        function accordionData() {
+            return {
+                openAccordion: null,
+                toggleAccordion(id) {
+                    const previouslyOpenId = this.openAccordion;
+                    if (this.openAccordion === id) { this.openAccordion = null; this.markCompleted(id); }
+                    else { if (previouslyOpenId) { this.markCompleted(previouslyOpenId); } this.openAccordion = id; }
+                },
+                markCompleted(id) {
+                    const globalState = Alpine.$data(document.body);
+                    if (id && globalState && !globalState.completedAccordions.includes(id)) {
+                         window.dispatchEvent(new CustomEvent('accordion-completed', { detail: { id: id } }));
+                    }
+                }
+            }
+        }
+        // Fungsi Data untuk Kuis (Tidak ada perubahan)
+        function quiz(config) {
+            return {
+                id: config.id, question: config.question, options: config.options, correctAnswer: config.correctAnswer,
+                points: config.points, hint: config.hint || '',
+                feedbackCorrect: config.feedbackCorrect || `Kamu dapat ${config.points} poin!`,
+                feedbackIncorrect: config.feedbackIncorrect || `Jawaban yang benar adalah: "${config.correctAnswer}".`,
+                selectedAnswer: null, submitted: false, isCorrect: false, feedbackText: '',
+                submitAnswer() {
+                    if (this.selectedAnswer === null) { this.feedbackText = ' Pilih salah satu jawaban dulu ya!'; this.isCorrect = false; this.submitted = true; return; }
+                    this.submitted = true; this.isCorrect = this.selectedAnswer === this.correctAnswer;
+                    this.feedbackText = this.isCorrect ? this.feedbackCorrect : this.feedbackIncorrect;
+                    window.dispatchEvent(new CustomEvent('quiz-completed', { detail: { id: this.id, correct: this.isCorrect } }));
+                }
+            }
+        }
+        // Fungsi Data untuk Flashcard (Konten tetap relevan)
+        function flashcardData() {
+            return {
+                currentIndex: 0, cardFlipped: false, viewedCards: [],
+                cards: [
+                    { term: "Lean", definition: "Filosofi dan metodologi untuk menghilangkan pemborosan (Muda) dan memaksimalkan nilai bagi pelanggan dalam setiap proses kerja." },
+                    { term: "Muda", definition: "Istilah Jepang untuk pemborosan atau aktivitas yang tidak memberi nilai tambah." },
+                    { term: "Value Stream", definition: "Semua langkah (baik yang bernilai tambah maupun tidak) dalam suatu proses dari awal hingga akhir." },
+                    { term: "Pull System", definition: "Sistem kerja di mana pekerjaan dilakukan hanya ketika ada permintaan atau kebutuhan dari langkah selanjutnya." },
+                    { term: "Kaizen", definition: "Filosofi perbaikan kecil yang terus-menerus melibatkan semua orang." },
+                    { term: "5S", definition: "Metodologi penataan tempat kerja: Ringkas, Rapi, Resik, Rawat, Rajin (Sort, Set in Order, Shine, Standardize, Sustain)." },
+                    { term: "Visual Management", definition: "Menggunakan alat bantu visual agar informasi penting, status, dan standar mudah terlihat dan dipahami." }
+                ],
+                init() { /* Bisa ditambahkan shuffle on load jika mau */ },
+                get currentCard() { return this.cards && this.cards.length > 0 ? this.cards[this.currentIndex] : { term: '...', definition: '...' }; },
+                flipCard() {
+                    this.cardFlipped = !this.cardFlipped;
+                    if (this.cardFlipped && !this.viewedCards.includes(this.currentIndex)) {
+                         this.viewedCards.push(this.currentIndex); console.log(`Flashcard viewed: ${this.currentIndex}. Total unique: ${this.viewedCards.length}`);
+                         const globalState = Alpine.$data(document.body);
+                         if (globalState) {
+                             globalState.addPoints(globalState.pointStructure.flashcard || 0);
+                             window.dispatchEvent(new CustomEvent('flashcard-viewed', { detail: { index: this.currentIndex } }));
+                             if (this.viewedCards.length >= this.cards.length && !globalState.allFlashcardsViewed) {
+                                 window.dispatchEvent(new CustomEvent('all-flashcards-viewed'));
+                             }
+                         }
+                    }
+                },
+                nextCard() { if (this.currentIndex < this.cards.length - 1) { this.currentIndex++; this.cardFlipped = false; } },
+                prevCard() { if (this.currentIndex > 0) { this.currentIndex--; this.cardFlipped = false; } },
+                shuffleCards() {
+                    console.log("Shuffling cards...");
+                    for (let i = this.cards.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]]; }
+                    this.currentIndex = 0; this.cardFlipped = false; this.viewedCards = [];
+                    console.log("Cards shuffled.");
+                    const globalState = Alpine.$data(document.body); if (globalState) { globalState.allFlashcardsViewed = false; }
+                }
+            }
+        }
+        // Event Listener Global (Tidak ada perubahan)
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentYearElement = document.getElementById('current-year');
+            if (currentYearElement) { currentYearElement.textContent = new Date().getFullYear(); }
+        });
+    </script>
+</body>
+</html>
